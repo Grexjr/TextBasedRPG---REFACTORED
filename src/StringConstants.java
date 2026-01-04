@@ -14,7 +14,7 @@ public class StringConstants {
 
     // Start Battle
     public static String BATTLE_HEADER = "=============== BATTLE BEGINS ===============";
-    public static String BATTLE_LIST = SPACER_1 + "A %s %s appears!";
+    public static String BATTLE_LIST = SPACER_1 + "%s %s %s appears!";
     public static String[] DESCRIPTORS = {"evil","wanton","nefarious","disgusting","tricksy","putrid","scary"};
     // Battle ask for choice
     public static String BATTLE_CHOICE = "Choose your action!%n1. Attack%n2. Defend%n3. Use an item%n4. Run Away";
