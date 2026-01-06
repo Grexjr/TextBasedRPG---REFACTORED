@@ -3,11 +3,15 @@ import java.util.List;
 
 public class BattleScene {
 
+    private final BattleUIHandler ui;
+
     private final ArrayList<Entity> battlers;
     private BattleTurn currentTurn;
     private boolean isBattleOver;
 
-    public BattleScene(Entity... participants){
+    public BattleScene(BattleUIHandler ui, Entity... participants){
+        this.ui = ui;
+
         battlers = new ArrayList<>();
         battlers.addAll(List.of(participants));
     }
@@ -18,37 +22,27 @@ public class BattleScene {
 
     public void setBattleOver(boolean battleOver){this.isBattleOver = battleOver;}
 
-    public void runBattle(){
-        Printer.printMessage(startBattle());
+    public void startBattle(){
+        // Tell the UI to announce the fight
+        ui.printBattleStart(battlers);
+
+        // Create a new turn for the battle to
+        runBattle();
+    }
+
+    private void runBattle(){
+        currentTurn = new BattleTurn(ui,this);
         while(!isBattleOver){
             runTurns();
         }
-        Printer.printMessage(endBattle());
-    }
-
-    private String startBattle(){
-        String enemyName = null;
-        currentTurn = new BattleTurn(this);
-        // Get the name of the enemy you are fighting for the battle start string (only works for one)
-        for(Entity e : battlers){
-            if(e instanceof Enemy){
-                enemyName = e.getName();
-            }
-        }
-        return String.format(StringConstants.BATTLE_START,enemyName);
+        ui.printBattleEnd();
     }
 
     private void runTurns(){
         while(!currentTurn.isTurnOver()){
             currentTurn.runTurn();
         }
-        currentTurn = new BattleTurn(this);
-    }
-
-    private String endBattle(){
-        return String.format(
-                StringConstants.BATTLE_OVER
-        );
+        currentTurn = new BattleTurn(ui,this);
     }
 
 
