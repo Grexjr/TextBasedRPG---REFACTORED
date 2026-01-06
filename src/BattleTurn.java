@@ -5,11 +5,13 @@ import java.util.InputMismatchException;
 
 public class BattleTurn {
 
+    private final BattleUIHandler ui;
     private final BattleScene parent;
     private final ArrayList<Entity> battlers;
     private boolean isTurnOver;
 
-    public BattleTurn(BattleScene parentBattle) {
+    public BattleTurn(BattleUIHandler ui, BattleScene parentBattle) {
+        this.ui = ui;
         parent = parentBattle;
         battlers = new ArrayList<>();
         battlers.addAll(parentBattle.getBattlers());
@@ -40,72 +42,58 @@ public class BattleTurn {
             if (!parent.getBattleOver()) {
                 if (battler instanceof Player) {
                     // If player, print message informing them of inputs
-                    Printer.printMessage(String.format(StringConstants.BATTLE_CHOICE));
+                    ui.printPlayerChoose();
                 }
-                // Run battle choice and print it to the screen
-                Printer.printMessage(makeBattleChoice(battler));
+                // Run battle choice
+                makeBattleChoice(battler);
             }
         }
         isTurnOver = true;
     }
 
-    private String makeBattleChoice(Entity chooser) {
+    private void makeBattleChoice(Entity chooser) {
         switch (validatePlayerInput(chooser)) {
             case 1 -> {
                 //  Attacking runs proper attack logic between chooser and target
                 Entity target = chooseTarget(chooser);
+                int damage = runAttack(chooser,target);
 
-                return String.format(
-                        StringConstants.BATTLE_ATTACK,
-                        chooser.getName(),
-                        target.getName(),
-                        target.getName(),
-                        runAttack(chooser, target),
-                        target.getName(),
-                        target.getCurrentHealth(),
-                        target.getMaxHealth()
-                );
+                ui.printAttack(chooser,target,damage);
             }
             case 2 -> {
                 //  Defending sets the defense boolean to true
                 chooser.defend();
-                return String.format(
-                        StringConstants.BATTLE_DEFEND,
-                        chooser.getName()
-                );
+                ui.printDefense(chooser);
             }
             case 3 -> {
                 //  Using an item does nothing yet
-                return String.format(
-                        StringConstants.BATTLE_ITEM,
-                        chooser.getName()
-                );
+                ui.printItem(chooser);
             }
             case 4 -> {
                 // Running sets the battle as over and interrupts the turn
                 parent.setBattleOver(true);
                 //TODO: Run calculation, then add that to the string below
-                return String.format(
-                        StringConstants.BATTLE_RUN,
-                        chooser.getName()
-                );
+                ui.printRun(chooser);
             }
             default -> {
                 //  Error state if no proper answer is chosen
-                return String.format(StringConstants.ERROR_STRING);
+                ui.printError("BAD-INPUT");
             }
         }
     }
 
     private int validatePlayerInput(Entity chooser) {
         // Validates if the players choice is within the proper range of options
-        // TODO: Validate if the player choice is a number!
         int choice = -1;
         while (choice < 1 || choice > 4) {
-            choice = chooser.makeBattleChoice();
-
-            if (choice < 1 || choice > 4) {
-                System.out.println("Invalid choice! 1-4!");
+            try{
+                choice = chooser.makeBattleChoice();
+                if (choice < 1 || choice > 4) {
+                    ui.printInvalidChoose(4);
+                }
+            } catch (InputMismatchException e){
+                ui.printInvalidChoose(4);
+                CommonConstants.SCAN.next();
             }
         }
         return choice;
@@ -115,15 +103,31 @@ public class BattleTurn {
         ArrayList<Entity> others = new ArrayList<>();
         others.addAll(battlers);
         others.remove(chooser);
+        int choice = -1;
 
         if (chooser instanceof Player) {
-            //Displaying
-            System.out.println("Who is the target? (1-xx)");
-            for (int i = 0; i < others.size(); i++) {
-                System.out.println((i + 1) + ". " + others.get(i).getName());
+            if(others.size() > 1){
+                //Displaying
+                ui.printTargetChoice(others);
+
+                for (int i = 0; i < others.size(); i++) {
+                    ui.printTargetOptions(others);
+                }
+
+                while(choice < 1 || choice > others.size()){
+                    try {
+                        choice = CommonConstants.SCAN.nextInt();
+                        if(choice < 1 || choice > others.size()){
+                            ui.printInvalidChoose(others.size());
+                        }
+                    } catch (InputMismatchException e) {
+                        ui.printInvalidChoose(others.size());
+                        CommonConstants.SCAN.next();
+                    }
+                }
+                return others.get(choice - 1);
             }
-            int choice = CommonConstants.SCAN.nextInt();
-            return others.get(choice - 1);
+            return others.getFirst();
         }
         // Random choice by enemy
         int randomChoice = CommonConstants.RAND.nextInt(0, others.size());

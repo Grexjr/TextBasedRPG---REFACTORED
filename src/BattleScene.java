@@ -31,7 +31,7 @@ public class BattleScene {
     }
 
     private void runBattle(){
-        currentTurn = new BattleTurn(this);
+        currentTurn = new BattleTurn(ui,this);
         while(!isBattleOver){
             runTurns();
         }
@@ -42,7 +42,7 @@ public class BattleScene {
         while(!currentTurn.isTurnOver()){
             currentTurn.runTurn();
         }
-        currentTurn = new BattleTurn(this);
+        currentTurn = new BattleTurn(ui,this);
     }
 
 

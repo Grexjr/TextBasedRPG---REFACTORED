@@ -16,8 +16,6 @@ public class Player extends Entity{
 
     @Override
     public int makeBattleChoice(){
-        //Display method but for now
-        System.out.println("What is your move? (1-4)");
         return CommonConstants.SCAN.nextInt();
     }
 
