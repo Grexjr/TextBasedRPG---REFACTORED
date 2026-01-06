@@ -59,6 +59,9 @@ public class BattleTurn {
                 int damage = runAttack(chooser,target);
 
                 ui.printAttack(chooser,target,damage);
+                if(target.checkDeath()){
+                    parent.setBattleOver(true);
+                }
             }
             case 2 -> {
                 //  Defending sets the defense boolean to true
@@ -71,9 +74,15 @@ public class BattleTurn {
             }
             case 4 -> {
                 // Running sets the battle as over and interrupts the turn
-                parent.setBattleOver(true);
-                //TODO: Run calculation, then add that to the string below
-                ui.printRun(chooser);
+                ArrayList<Entity> others = new ArrayList<>();
+                others.addAll(battlers);
+                others.remove(chooser);
+
+                boolean runSuccess = chooser.attemptRun(others);
+                ui.printRun(chooser,runSuccess);
+                if(runSuccess){
+                    parent.setBattleOver(true);
+                }
             }
             default -> {
                 //  Error state if no proper answer is chosen

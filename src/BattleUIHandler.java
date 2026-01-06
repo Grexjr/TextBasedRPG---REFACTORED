@@ -99,12 +99,26 @@ public class BattleUIHandler {
         render(message);
     }
 
-    public void printRun(Entity runner){
+    public void printRun(Entity runner, boolean success){
         String message = String.format(
                 StringConstants.BATTLE_RUN,
                 runner.getName()
         );
+        String message2;
+        if(success){
+            message2 = String.format(
+                    StringConstants.BATTLE_RUN_SUCCESS,
+                    runner.getName()
+            );
+        } else {
+            message2 = String.format(
+                    StringConstants.BATTLE_RUN_FAIL,
+                    runner.getName()
+            );
+        }
         render(message);
+        // TODO: Add a delay
+        render(message2);
     }
 
     public void printBattleEnd(){

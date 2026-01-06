@@ -31,6 +31,8 @@ public class StringConstants {
     public static String BATTLE_ITEM = "%s uses an item!";
     // Battle Run String
     public static String BATTLE_RUN = "%s attempts to run away!";
+    public static String BATTLE_RUN_SUCCESS = "%s successfully escaped!";
+    public static String BATTLE_RUN_FAIL = "%s's way was blocked...";
     // Battle Over String
     public static String BATTLE_OVER = "The battle is over!";
 
