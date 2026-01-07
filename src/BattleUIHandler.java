@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -121,8 +122,38 @@ public class BattleUIHandler {
         render(message2);
     }
 
-    public void printBattleEnd(){
-        //TODO: Different messages based on enum of how the battle ends (win, loss, run)
+    public void printBattleEnd(List<Entity> battlers,BattleResult battleEnd){
+        switch(battleEnd){
+            case VICTORY -> {
+                ArrayList<Entity> others = new ArrayList<>();
+                others.addAll(battlers);
+                for(Entity e : others){
+                    if(e instanceof Player){
+                        others.remove(e);
+                    }
+                }
+                for(Entity e : others){
+                    String message = String.format(StringConstants.BATTLE_WON,e.getName());
+                    render(message);
+                }
+            }
+            case DEFEAT -> {
+                render(StringConstants.BATTLE_LOST);
+            }
+            case ESCAPED -> {
+                render(StringConstants.BATTLE_ESCAPED_PLAYER);
+            }
+            case ENEMY_ESCAPED -> {
+                render(StringConstants.BATTLE_ESCAPED_ENEMY);
+            }
+            case INTERRUPTED -> {
+                String message = String.format(StringConstants.BATTLE_INTERRUPT, "PLACEHOLDER");
+                render(message);
+            }
+            default -> {
+                render(StringConstants.BATTLE_OVER);
+            }
+        }
         render(StringConstants.BATTLE_OVER);
     }
 

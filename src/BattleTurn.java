@@ -36,9 +36,16 @@ public class BattleTurn {
 
     public void runTurn() {
         runSpeedCalc();
-        for (Entity battler : battlers) {
-            // Reset the battler
+        // Reset the battlers
+        for(Entity battler : battlers) {
             battler.resetBattleState();
+            // Issue: the battler who goes last will immediately have things reset for them... hmm.... but, if
+            // we have it reset at the beginning of turn, then enemy can defend, player goes, then enemy goes..
+            // I may need to rethink the battle system; you see what the enemy does first
+            // Maybe force defends to occur at the start of the turn
+        }
+        for (Entity battler : battlers) {
+
             if (!parent.getBattleOver()) {
                 if (battler instanceof Player) {
                     // If player, print message informing them of inputs
@@ -59,8 +66,13 @@ public class BattleTurn {
                 int damage = runAttack(chooser,target);
 
                 ui.printAttack(chooser,target,damage);
+                //TODO: In multi-enemy battles, this ends the battle if one dies - fix with check for all
                 if(target.checkDeath()){
-                    parent.setBattleOver(true);
+                    if(target instanceof Player){
+                        parent.endBattle(BattleResult.DEFEAT);
+                    } else {
+                        parent.endBattle(BattleResult.VICTORY);
+                    }
                 }
             }
             case 2 -> {
@@ -81,7 +93,11 @@ public class BattleTurn {
                 boolean runSuccess = chooser.attemptRun(others);
                 ui.printRun(chooser,runSuccess);
                 if(runSuccess){
-                    parent.setBattleOver(true);
+                    if(chooser instanceof Player){
+                        parent.endBattle(BattleResult.ESCAPED);
+                    } else {
+                        parent.endBattle(BattleResult.ENEMY_ESCAPED);
+                    }
                 }
             }
             default -> {
