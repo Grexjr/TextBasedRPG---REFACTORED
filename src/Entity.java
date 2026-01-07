@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.UUID;
 
 public abstract class Entity {
@@ -139,6 +140,25 @@ public abstract class Entity {
         return calcDamage;
     }
 
+    public boolean checkDeath(){
+        return currentHealth <= 0;
+    }
+
+    public boolean attemptRun(List<Entity> runFrom){
+        double speedToBeat = runFrom.stream()
+                .mapToDouble(Entity::getSpeed)
+                .average().orElse(0.0);
+
+        // For now, if speed is greater, run succeeds - if equal, random chance
+        if(getSpeed() > speedToBeat){
+            return true;
+        }
+        if(getSpeed() == speedToBeat){
+            return CommonConstants.RAND.nextBoolean();
+        }
+        return false;
+    }
+
 
     /**
      * Calculates damage based on the defense of the player.
@@ -163,8 +183,6 @@ public abstract class Entity {
 
     // Abstract methods
     public abstract int makeBattleChoice();
-
-
 
 
 

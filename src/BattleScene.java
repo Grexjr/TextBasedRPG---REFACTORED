@@ -30,12 +30,20 @@ public class BattleScene {
         runBattle();
     }
 
+    public void endBattle(BattleResult result){
+        // set the battle status to over
+        isBattleOver = true;
+        // UI Printing based on result
+        ui.printBattleEnd(battlers,result);
+        // Game functionality based on result
+        //TODO
+    }
+
     private void runBattle(){
         currentTurn = new BattleTurn(ui,this);
         while(!isBattleOver){
             runTurns();
         }
-        ui.printBattleEnd();
     }
 
     private void runTurns(){

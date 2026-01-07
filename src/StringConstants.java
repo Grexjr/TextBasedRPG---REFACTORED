@@ -7,6 +7,7 @@ public class StringConstants {
     public static String SPACER_1 = " - ";
     public static String SPACER_2 = " -> ";
     public static String SPACER_3 = " >> ";
+    public static String SPACER_4 = " > ";
 
 
     // Displaying Entity
@@ -31,8 +32,15 @@ public class StringConstants {
     public static String BATTLE_ITEM = "%s uses an item!";
     // Battle Run String
     public static String BATTLE_RUN = "%s attempts to run away!";
-    // Battle Over String
-    public static String BATTLE_OVER = "The battle is over!";
+    public static String BATTLE_RUN_SUCCESS = "%s successfully escaped!";
+    public static String BATTLE_RUN_FAIL = "%s's way was blocked...";
+    // Battle Over Strings
+    public static String BATTLE_WON = "%s has been defeated! You win!";
+    public static String BATTLE_LOST = "Your body grows weaker and your vision fades...";
+    public static String BATTLE_ESCAPED_PLAYER = "You are free from the battle!";
+    public static String BATTLE_ESCAPED_ENEMY = "The battlefield is empty...";
+    public static String BATTLE_INTERRUPT = "%s has interrupted the battle!";
+    public static String BATTLE_OVER = "================ BATTLE OVER ================";
 
 
 
