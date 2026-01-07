@@ -1,3 +1,5 @@
+package constants;
+
 public class StringConstants {
 
     // All string outputs for the game
@@ -10,7 +12,7 @@ public class StringConstants {
     public static String SPACER_4 = " > ";
 
 
-    // Displaying Entity
+    // Displaying entities.Entity
     public static String ENTITY_DISPLAY = "%s%n%s%nLevel: %d%nHealth: %d/%d%nAttack: %d%nDefense: %d%nSpeed: %d%n";
 
     // Start Battle

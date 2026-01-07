@@ -1,6 +1,6 @@
-import java.util.UUID;
+package entities;
 
-public class Enemy extends Entity{
+public class Enemy extends Entity {
 
     public Enemy(){
         super(
@@ -9,7 +9,7 @@ public class Enemy extends Entity{
                 1,
                 0,
                 0,
-                "Enemy",
+                "entities.Enemy",
                 "It's enemy!"
         );
     }

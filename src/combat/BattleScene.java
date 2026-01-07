@@ -1,3 +1,8 @@
+package combat;
+
+import entities.Entity;
+import ui.BattleUIHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 

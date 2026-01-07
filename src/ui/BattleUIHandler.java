@@ -1,6 +1,13 @@
+package ui;
+
+import combat.BattleResult;
+import constants.CommonConstants;
+import constants.StringConstants;
+import entities.Entity;
+import entities.Player;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BattleUIHandler {
 
@@ -122,7 +129,7 @@ public class BattleUIHandler {
         render(message2);
     }
 
-    public void printBattleEnd(List<Entity> battlers,BattleResult battleEnd){
+    public void printBattleEnd(List<Entity> battlers, BattleResult battleEnd){
         switch(battleEnd){
             case VICTORY -> {
                 ArrayList<Entity> others = new ArrayList<>();

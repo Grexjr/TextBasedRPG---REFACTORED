@@ -1,4 +1,9 @@
-import java.util.ArrayList;
+package core;
+
+import combat.BattleScene;
+import entities.Enemy;
+import entities.Player;
+import ui.BattleUIHandler;
 
 public class Main {
 

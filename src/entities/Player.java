@@ -1,6 +1,6 @@
-import java.util.UUID;
+package entities;
 
-public class Player extends Entity{
+public class Player extends Entity {
 
     public Player(){
         super(
@@ -9,7 +9,7 @@ public class Player extends Entity{
                 1,
                 0,
                 1,
-                "Player",
+                "entities.Player",
                 "It's you!"
         );
     }

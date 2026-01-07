@@ -1,3 +1,5 @@
+package combat;
+
 public enum BattleResult {
 
     VICTORY,
