@@ -1,5 +1,6 @@
 package combat;
 
+import combat.actions.*;
 import constants.CommonConstants;
 import entities.Entity;
 import entities.Player;
@@ -14,6 +15,7 @@ public class BattleTurn {
     private final BattleUIHandler ui;
     private final BattleScene parent;
     private final ArrayList<Entity> battlers;
+    private final ArrayList<BattleAction> actions;
     private boolean isTurnOver;
 
     public BattleTurn(BattleUIHandler ui, BattleScene parentBattle) {
@@ -21,6 +23,7 @@ public class BattleTurn {
         parent = parentBattle;
         battlers = new ArrayList<>();
         battlers.addAll(parentBattle.getBattlers());
+        actions = new ArrayList<>();
         isTurnOver = false;
     }
 
@@ -40,75 +43,103 @@ public class BattleTurn {
         battlers.sort(Comparator.comparingInt(Entity::getSpeed).reversed());
     }
 
-    public void runTurn() {
-        runSpeedCalc();
-        // Reset the battlers
-        for(Entity battler : battlers) {
-            battler.resetBattleState();
-            // Issue: the battler who goes last will immediately have things reset for them... hmm.... but, if
-            // we have it reset at the beginning of turn, then enemy can defend, player goes, then enemy goes..
-            // I may need to rethink the battle system; you see what the enemy does first
-            // Maybe force defends to occur at the start of the turn
-        }
-        for (Entity battler : battlers) {
 
+    public void collectActions(){
+        for(Entity battler : battlers){
             if (!parent.getBattleOver()) {
                 if (battler instanceof Player) {
                     // If player, print message informing them of inputs
                     ui.printPlayerChoose();
                 }
                 // Run battle choice
-                makeBattleChoice(battler);
+                actions.add(makeBattleChoice(battler));
             }
         }
-        isTurnOver = true;
     }
 
-    private void makeBattleChoice(Entity chooser) {
-        switch (validatePlayerInput(chooser)) {
-            case 1 -> {
-                //  Attacking runs proper attack logic between chooser and target
-                Entity target = chooseTarget(chooser);
-                int damage = runAttack(chooser,target);
+    public void sortActions(){
+        actions.sort(
+                // Highest priority first - 2, 1, 0
+                Comparator.comparingInt(BattleAction::getPriority).reversed()
+                .thenComparing(Comparator.comparingInt((BattleAction a) -> a.getUser().getSpeed()).reversed())
+        );
+    }
 
-                ui.printAttack(chooser,target,damage);
-                //TODO: In multi-enemy battles, this ends the battle if one dies - fix with check for all
-                if(target.checkDeath()){
-                    if(target instanceof Player){
-                        parent.endBattle(BattleResult.DEFEAT);
-                    } else {
-                        parent.endBattle(BattleResult.VICTORY);
-                    }
-                }
-            }
-            case 2 -> {
-                //  Defending sets the defense boolean to true
-                chooser.defend();
-                ui.printDefense(chooser);
-            }
-            case 3 -> {
-                //  Using an item does nothing yet
-                ui.printItem(chooser);
-            }
-            case 4 -> {
-                // Running sets the battle as over and interrupts the turn
-                ArrayList<Entity> others = new ArrayList<>();
-                others.addAll(battlers);
-                others.remove(chooser);
+    public void executeActions(){
+        //TODO: Figure out where to add AP
+        for(BattleAction action : actions){
+            // 1. If battle has ended, stop immediately
+            if(parent.getBattleOver()) break;
 
-                boolean runSuccess = chooser.attemptRun(others);
-                ui.printRun(chooser,runSuccess);
-                if(runSuccess){
-                    if(chooser instanceof Player){
+            // 2. If user is dead, skip them (continue moves to next iteration of loop)
+            if(action.getUser().checkDeath()) continue;
+
+            // 3. Clear flags from last turn
+            action.getUser().resetBattleState();
+
+            // 4. If move is valid, execute (user is alive, or for attacks, user and target are alive)
+            if(action.isValid()){
+                boolean shouldInterrupt = action.execute(ui);
+                if(shouldInterrupt){
+                    if(action.getUser() instanceof Player){
                         parent.endBattle(BattleResult.ESCAPED);
                     } else {
+                        // TODO: ends the battle if one enemy escapes; fix this.
                         parent.endBattle(BattleResult.ENEMY_ESCAPED);
                     }
                 }
             }
+
+            // 5. User is alive, but the isValid returned false (only for attack actions)
+            else if(action instanceof AttackAction){
+                ui.printAttackNothing(action.getUser());
+            }
+        }
+    }
+
+
+
+
+
+
+    public void runTurn() {
+        collectActions();
+        sortActions();
+        executeActions();
+        isTurnOver = true;
+    }
+
+    private BattleAction makeBattleChoice(Entity chooser) {
+        switch (validatePlayerInput(chooser)) {
+            case 1 -> {
+                return new AttackAction(chooser,chooseTarget(chooser));
+            }
+            case 2 -> {
+                return new DefendAction(chooser);
+            }
+            case 3 -> {
+                return new ItemAction(chooser);
+            }
+            case 4 -> {
+                ArrayList<Entity> others = new ArrayList<>();
+                // If player, add all enemies. If enemy, add only the player
+                if(chooser instanceof Player){
+                    others.addAll(battlers);
+                    others.remove(chooser);
+                } else {
+                    for(Entity e : battlers){
+                        if(e instanceof Player){
+                            others.add(e);
+                        }
+                    }
+                }
+
+                return new RunAction(chooser,others);
+            }
             default -> {
                 //  Error state if no proper answer is chosen
                 ui.printError("BAD-INPUT");
+                return null; // TODO: find way to handle this
             }
         }
     }

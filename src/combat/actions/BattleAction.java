@@ -30,6 +30,10 @@ public abstract class BattleAction {
         this.user = user;
     }
 
+    public boolean isValid(){
+        return !user.checkDeath();
+    }
+
 
     public abstract boolean execute(BattleUIHandler ui);
 

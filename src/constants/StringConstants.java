@@ -28,6 +28,7 @@ public class StringConstants {
     public static String BATTLE_TARGET_LIST = "%d. %s";
     // Battle Attack
     public static String BATTLE_ATTACK = "%s attacks %s!%n%s takes %d damage!%n%s Health: %d/%d";
+    public static String BATTLE_ATTACK_NOTHING = "%s hits nothing!";
     // Battle Defend
     public static String BATTLE_DEFEND = "%s defends!";
     // Battle Item Use

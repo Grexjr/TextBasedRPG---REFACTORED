@@ -1,5 +1,7 @@
 package entities;
 
+import constants.CommonConstants;
+
 public class Enemy extends Entity {
 
     public Enemy(){
@@ -9,7 +11,7 @@ public class Enemy extends Entity {
                 1,
                 0,
                 0,
-                "entities.Enemy",
+                "Enemy",
                 "It's enemy!"
         );
     }

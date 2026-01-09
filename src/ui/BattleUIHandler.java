@@ -90,6 +90,13 @@ public class BattleUIHandler {
         render(message);
     }
 
+    public void printAttackNothing(Entity attacker){
+        String message = String.format(
+                StringConstants.BATTLE_ATTACK_NOTHING,
+                attacker.getName()
+        );
+    }
+
     public void printDefense(Entity defender){
         String message = String.format(
                 StringConstants.BATTLE_DEFEND,

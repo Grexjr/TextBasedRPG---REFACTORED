@@ -1,5 +1,8 @@
 package entities;
 
+import constants.CommonConstants;
+import constants.StringConstants;
+
 import java.util.List;
 import java.util.UUID;
 
