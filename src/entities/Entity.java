@@ -12,13 +12,14 @@ public abstract class Entity {
     private static final int DEFEND_MOD = 2;
 
     private final UUID id;
-    private int level,maxHealth,currentHealth,attack,defense,speed;
+    private int level,maxHealth,currentHealth,attack,defense,speed,maxAP,currentAP;
     private String name,description;
 
     // Battle variables
     private boolean isDefending;
 
-    public Entity(int level, int maxHealth, int attack, int defense, int speed, String name, String description){
+    public Entity(int level, int maxHealth, int attack, int defense, int speed, String name, String description,
+                  int maxAP){
         id = UUID.randomUUID();
         this.level = level;
         this.maxHealth = maxHealth;
@@ -31,6 +32,8 @@ public abstract class Entity {
 
         // Battle variables
         isDefending = false;
+        this.maxAP = maxAP;
+        this.currentAP = maxAP;
     }
 
     @Override
@@ -85,6 +88,10 @@ public abstract class Entity {
 
     public boolean getDefending(){return isDefending;}
 
+    public int getMaxAP(){return maxAP;}
+
+    public int getCurrentAP(){return currentAP;}
+
     public void setLevel(int level) {
         this.level = level;
     }
@@ -118,6 +125,10 @@ public abstract class Entity {
     }
 
     public void setDefending(boolean defending){this.isDefending = defending;}
+
+    public void setMaxAP(int ap){this.maxAP = ap;}
+
+    public void setCurrentAP(int ap){this.currentAP = ap;}
 
     // Methods
     public String displayEntity(){
@@ -181,6 +192,14 @@ public abstract class Entity {
     // Battle methods
     public void defend(){isDefending = true;}
     public void endDefense(){isDefending = false;}
+
+    public void consumeAP(int consumption){
+        currentAP = Math.max(0,currentAP - consumption);
+    }
+
+    public void recoverAP(int recovery){
+        currentAP = Math.min(maxAP, currentAP + recovery);
+    }
 
     public void resetBattleState(){
         endDefense();

@@ -1,5 +1,6 @@
 package combat.actions;
 
+import combat.BattleScene;
 import entities.Entity;
 import ui.BattleUIHandler;
 
@@ -7,8 +8,8 @@ public class AttackAction extends BattleAction{
 
     private final Entity target;
 
-    public AttackAction(Entity user, Entity target){
-        super(user,0,0);
+    public AttackAction(BattleScene scene, Entity user, Entity target){
+        super(scene, user,0,0);
         this.target = target;
     }
 

@@ -1,5 +1,6 @@
 package combat.actions;
 
+import combat.BattleScene;
 import entities.Entity;
 import ui.BattleUIHandler;
 
@@ -9,8 +10,8 @@ public class RunAction extends BattleAction {
 
     private final ArrayList<Entity> runFroms;
 
-    public RunAction(Entity user, ArrayList<Entity> runFroms){
-        super(user,2,0);
+    public RunAction(BattleScene scene, Entity user, ArrayList<Entity> runFroms){
+        super(scene, user,2,0);
         this.runFroms = runFroms;
     }
 

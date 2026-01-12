@@ -81,6 +81,7 @@ public class BattleTurn {
             if(action.isValid()){
                 boolean shouldInterrupt = action.execute(ui);
                 if(shouldInterrupt){
+                    // TODO: Find a better way to do this; just cares about running right now
                     if(action.getUser() instanceof Player){
                         parent.endBattle(BattleResult.ESCAPED);
                     } else {
@@ -110,15 +111,17 @@ public class BattleTurn {
     }
 
     private BattleAction makeBattleChoice(Entity chooser) {
-        switch (validatePlayerInput(chooser)) {
+        //TODO: Check here if the player has enough AP to do the move -- or create helper method
+        int choice = validatePlayerInput(chooser);
+        switch (choice) {
             case 1 -> {
-                return new AttackAction(chooser,chooseTarget(chooser));
+                return new AttackAction(parent, chooser,chooseTarget(chooser));
             }
             case 2 -> {
-                return new DefendAction(chooser);
+                return new DefendAction(parent, chooser);
             }
             case 3 -> {
-                return new ItemAction(chooser);
+                return new ItemAction(parent, chooser);
             }
             case 4 -> {
                 ArrayList<Entity> others = new ArrayList<>();
@@ -134,7 +137,7 @@ public class BattleTurn {
                     }
                 }
 
-                return new RunAction(chooser,others);
+                return new RunAction(parent, chooser,others);
             }
             default -> {
                 //  Error state if no proper answer is chosen

@@ -1,12 +1,13 @@
 package combat.actions;
 
+import combat.BattleScene;
 import entities.Entity;
 import ui.BattleUIHandler;
 
 public class ItemAction extends BattleAction {
 
-    public ItemAction(Entity user){
-        super(user,0,0);
+    public ItemAction(BattleScene scene, Entity user){
+        super(scene, user,0,0);
     }
 
     @Override
