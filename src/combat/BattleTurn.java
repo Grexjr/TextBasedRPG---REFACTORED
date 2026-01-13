@@ -61,7 +61,7 @@ public class BattleTurn {
         actions.sort(
                 // Highest priority first - 2, 1, 0
                 Comparator.comparingInt(BattleAction::getPriority).reversed()
-                .thenComparing(Comparator.comparingInt((BattleAction a) -> a.getUser().getSpeed()).reversed())
+                .thenComparing(Comparator.comparingInt((BattleAction a) -> a.getActor().getSpeed()).reversed())
         );
     }
 
@@ -72,28 +72,19 @@ public class BattleTurn {
             if(parent.getBattleOver()) break;
 
             // 2. If user is dead, skip them (continue moves to next iteration of loop)
-            if(action.getUser().checkDeath()) continue;
+            if(action.getActor().checkDeath()) continue;
 
             // 3. Clear flags from last turn
-            action.getUser().resetBattleState();
+            action.getActor().resetBattleState();
 
             // 4. If move is valid, execute (user is alive, or for attacks, user and target are alive)
             if(action.isValid()){
-                boolean shouldInterrupt = action.execute(ui);
-                if(shouldInterrupt){
-                    // TODO: Find a better way to do this; just cares about running right now
-                    if(action.getUser() instanceof Player){
-                        parent.endBattle(BattleResult.ESCAPED);
-                    } else {
-                        // TODO: ends the battle if one enemy escapes; fix this.
-                        parent.endBattle(BattleResult.ENEMY_ESCAPED);
-                    }
-                }
+               action.execute(ui);
             }
 
             // 5. User is alive, but the isValid returned false (only for attack actions)
             else if(action instanceof AttackAction){
-                ui.printAttackNothing(action.getUser());
+                ui.printAttackNothing(action.getActor());
             }
         }
     }

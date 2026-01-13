@@ -7,13 +7,12 @@ import ui.BattleUIHandler;
 public class ItemAction extends BattleAction {
 
     public ItemAction(BattleScene scene, Entity user){
-        super(scene, user,0,0);
+        super(ActionType.ITEM,scene, user);
     }
 
     @Override
-    public boolean execute(BattleUIHandler ui){
+    public void execute(BattleUIHandler ui){
         //TODO: Add item logic
-        ui.printItem(getUser());
-        return false;
+        ui.printItem(getActor());
     }
 }

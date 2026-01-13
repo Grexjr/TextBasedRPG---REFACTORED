@@ -7,14 +7,13 @@ import ui.BattleUIHandler;
 public class DefendAction extends BattleAction {
 
     public DefendAction(BattleScene scene, Entity user){
-        super(scene, user,1,0);
+        super(ActionType.DEFEND,scene, user);
     }
 
     @Override
-    public boolean execute(BattleUIHandler ui){
-        getUser().defend();
-        ui.printDefense(getUser());
-        return false;
+    public void execute(BattleUIHandler ui){
+        getActor().defend();
+        ui.printDefense(getActor());
     }
 
 

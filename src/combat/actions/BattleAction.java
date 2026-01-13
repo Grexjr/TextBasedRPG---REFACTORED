@@ -6,44 +6,35 @@ import ui.BattleUIHandler;
 
 public abstract class BattleAction {
 
+    private final ActionType type;
     private final BattleScene scene;
-    private final int priority, apCost;
-    private Entity user;
+    private final Entity actor;
+    private final int priority;
+    private int apCostBase;
 
-    public BattleAction(BattleScene scene, Entity user, int priority, int apCost){
+    public BattleAction(ActionType type, BattleScene scene, Entity actor){
+        this.type = type;
         this.scene = scene;
-        this.priority = priority;
-        this.apCost = apCost;
-        this.user = user;
+        this.actor = actor;
+
+        this.priority = type.getPriority();
+        this.apCostBase = type.getApCost();
     }
+
+    public ActionType getType(){return type;}
 
     public BattleScene getScene(){return scene;}
 
-    public int getPriority() {
-        return priority;
-    }
+    public Entity getActor() {return actor;}
 
-    public int getApCost() {
-        return apCost;
-    }
-
-    public Entity getUser() {
-        return user;
-    }
-
-    public void setUser(Entity user) {
-        this.user = user;
-    }
+    public int getPriority(){return priority;}
 
     public boolean isValid(){
-        return !user.checkDeath();
+        return !actor.checkDeath();
     }
 
-    public boolean canAfford(){
-        return user.getCurrentAP() >= apCost;
-    }
+    // TODO: Add private method to calculate final AP Cost using method in entity that calculates based on items, etc.
 
-
-    public abstract boolean execute(BattleUIHandler ui);
+    public abstract void execute(BattleUIHandler ui);
 
 }
