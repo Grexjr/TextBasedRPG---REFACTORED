@@ -10,7 +10,7 @@ public abstract class BattleAction {
     private final BattleScene scene;
     private final Entity actor;
     private final int priority;
-    private int apCostBase;
+    private int apCostFinal; // Maybe make final?
 
     public BattleAction(ActionType type, BattleScene scene, Entity actor){
         this.type = type;
@@ -18,7 +18,8 @@ public abstract class BattleAction {
         this.actor = actor;
 
         this.priority = type.getPriority();
-        this.apCostBase = type.getApCost();
+        // Calculates the ap cost based on user stats using the base ap cost; if no modifiers, returns the base cost
+        this.apCostFinal = actor.calculateAPCost(type.getApBaseCost());
     }
 
     public ActionType getType(){return type;}
@@ -29,11 +30,11 @@ public abstract class BattleAction {
 
     public int getPriority(){return priority;}
 
+    public int getApCostFinal(){return apCostFinal;}
+
     public boolean isValid(){
         return !actor.checkDeath();
     }
-
-    // TODO: Add private method to calculate final AP Cost using method in entity that calculates based on items, etc.
 
     public abstract void execute(BattleUIHandler ui);
 

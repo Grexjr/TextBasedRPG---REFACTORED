@@ -16,7 +16,7 @@ public enum ActionType {
     ),
     ITEM(
             3,
-            "ItemUse",
+            "Use an Item",
             1,
             0
     ),
@@ -27,13 +27,13 @@ public enum ActionType {
             Integer.MAX_VALUE
     );
 
-    private final int id,apCost,priority;
+    private final int id, apBaseCost,priority;
     private final String name;
 
     ActionType(int id, String name, int apCost, int priority){
         this.id = id;
         this.name = name;
-        this.apCost = apCost;
+        this.apBaseCost = apCost;
         this.priority = priority;
     }
 
@@ -41,8 +41,8 @@ public enum ActionType {
         return id;
     }
 
-    public int getApCost() {
-        return apCost;
+    public int getApBaseCost() {
+        return apBaseCost;
     }
 
     public int getPriority() {

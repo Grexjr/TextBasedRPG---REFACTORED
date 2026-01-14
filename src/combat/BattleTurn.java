@@ -52,7 +52,11 @@ public class BattleTurn {
                     ui.printPlayerChoose();
                 }
                 // Run battle choice
-                actions.add(makeBattleChoice(battler));
+                BattleAction action = makeBattleChoice(battler);
+                while(action == null){
+                    action = makeBattleChoice(battler);
+                }
+                actions.add(action);
             }
         }
     }
@@ -102,17 +106,20 @@ public class BattleTurn {
     }
 
     private BattleAction makeBattleChoice(Entity chooser) {
-        //TODO: Check here if the player has enough AP to do the move -- or create helper method
         int choice = validatePlayerInput(chooser);
+        BattleAction action;
         switch (choice) {
             case 1 -> {
-                return new AttackAction(parent, chooser,chooseTarget(chooser));
+                action = new AttackAction(parent, chooser,chooseTarget(chooser));
+                return checkAP(chooser,action);
             }
             case 2 -> {
-                return new DefendAction(parent, chooser);
+                action = new DefendAction(parent,chooser);
+                return checkAP(chooser,action);
             }
             case 3 -> {
-                return new ItemAction(parent, chooser);
+                action = new ItemAction(parent,chooser);
+                return checkAP(chooser,action);
             }
             case 4 -> {
                 ArrayList<Entity> others = new ArrayList<>();
@@ -128,14 +135,24 @@ public class BattleTurn {
                     }
                 }
 
-                return new RunAction(parent, chooser,others);
+                action = new RunAction(parent,chooser,others);
+
+                return checkAP(chooser,action);
             }
             default -> {
                 //  Error state if no proper answer is chosen
                 ui.printError("BAD-INPUT");
-                return null; // TODO: find way to handle this
+                return null; // Happy accident; returning null here keeps player in the window
             }
         }
+    }
+
+    private BattleAction checkAP(Entity chooser, BattleAction action){
+        if(chooser.hasAP(action.getApCostFinal())){
+            return action;
+        }
+        ui.printNotEnoughAp(action.getType().getName());
+        return null;
     }
 
     private int validatePlayerInput(Entity chooser) {

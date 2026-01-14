@@ -26,6 +26,8 @@ public class StringConstants {
     //Battle ask for target
     public static String BATTLE_TARGET = "Who is your target?%n" + SPACER_3 + "Input 1-%d";
     public static String BATTLE_TARGET_LIST = "%d. %s";
+    // Battle AP costs
+    public static String BATTLE_AP_DEFICIT = "You're too tired to %s!";
     // Battle Attack
     public static String BATTLE_ATTACK = "%s attacks %s!%n%s takes %d damage!%n%s Health: %d/%d";
     public static String BATTLE_ATTACK_NOTHING = "%s hits nothing!";

@@ -64,6 +64,11 @@ public class BattleUIHandler {
         render(message);
     }
 
+    public void printNotEnoughAp(String actionName){
+        String message = String.format(StringConstants.BATTLE_AP_DEFICIT,actionName);
+        render(message);
+    }
+
     public void printTargetChoice(List<Entity> targets){
         String message = String.format(StringConstants.BATTLE_TARGET,targets.size());
         render(message);

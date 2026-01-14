@@ -201,6 +201,16 @@ public abstract class Entity {
         currentAP = Math.min(maxAP, currentAP + recovery);
     }
 
+    public int calculateAPCost(int baseAPCost){
+        int finalAPCost = baseAPCost;
+        return finalAPCost;
+    }
+
+    public boolean hasAP(int cost){
+        // True means has AP, false means does not have enough
+        return currentAP >= cost;
+    }
+
     public void resetBattleState(){
         endDefense();
     }
