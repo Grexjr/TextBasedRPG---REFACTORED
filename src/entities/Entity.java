@@ -218,6 +218,4 @@ public abstract class Entity {
     // Abstract methods
     public abstract int makeBattleChoice();
 
-
-
 }

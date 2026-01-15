@@ -1,0 +1,7 @@
+AP Will recover by a set amount each turn, but can be increased by certain actions
+
+Every encounter starts with 0 AP on both sides; but if one side surprises the other, they get 5 AP.
+
+Before an encounter, get chance to surprise; rolls a dice if successful? but if you fail, the enemy gets 5 AP...
+-- It's hard to add gameplay to a text based game that isnt chance and strategy-- but it does at least add some risk
+and reward behavior, based on player health etc.

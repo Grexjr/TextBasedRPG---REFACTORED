@@ -12,7 +12,8 @@ public class Player extends Entity {
                 0,
                 1,
                 "Player",
-                "It's you!"
+                "It's you!",
+                10
         );
     }
 

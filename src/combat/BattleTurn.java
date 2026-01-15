@@ -2,6 +2,7 @@ package combat;
 
 import combat.actions.*;
 import constants.CommonConstants;
+import entities.Enemy;
 import entities.Entity;
 import entities.Player;
 import ui.BattleUIHandler;
@@ -15,6 +16,8 @@ public class BattleTurn {
     private final BattleUIHandler ui;
     private final BattleScene parent;
     private final ArrayList<Entity> battlers;
+    private final ArrayList<Entity> players;
+    private final ArrayList<Entity> enemies;
     private final ArrayList<BattleAction> actions;
     private boolean isTurnOver;
 
@@ -23,6 +26,16 @@ public class BattleTurn {
         parent = parentBattle;
         battlers = new ArrayList<>();
         battlers.addAll(parentBattle.getBattlers());
+        players = new ArrayList<>();
+        enemies = new ArrayList<>();
+        for(Entity battler : battlers){
+            if(battler instanceof Player){
+                players.add(battler);
+            }
+            if(battler instanceof Enemy){
+                enemies.add(battler);
+            }
+        }
         actions = new ArrayList<>();
         isTurnOver = false;
     }
@@ -49,7 +62,7 @@ public class BattleTurn {
             if (!parent.getBattleOver()) {
                 if (battler instanceof Player) {
                     // If player, print message informing them of inputs
-                    ui.printPlayerChoose();
+                    ui.printPlayerChoose(battler);
                 }
                 // Run battle choice
                 BattleAction action = makeBattleChoice(battler);
@@ -70,7 +83,6 @@ public class BattleTurn {
     }
 
     public void executeActions(){
-        //TODO: Figure out where to add AP
         for(BattleAction action : actions){
             // 1. If battle has ended, stop immediately
             if(parent.getBattleOver()) break;
@@ -99,13 +111,42 @@ public class BattleTurn {
 
 
     public void runTurn() {
+        int deadPlayers = 0;
+        int deadEnemies = 0;
+
+        // TODO: Use stream logic to refactor this; can check if all match a certain parameter
+
+        for(Entity player : players){
+            if(player.checkDeath()){
+                deadPlayers += 1;
+            }
+            if(deadPlayers == players.size()){
+                parent.endBattle(BattleResult.DEFEAT);
+            }
+        }
+        for(Entity enemy : enemies){
+            if(enemy.checkDeath()){
+                deadEnemies += 1;
+            }
+            if(deadEnemies == enemies.size()){
+                parent.endBattle(BattleResult.VICTORY);
+            }
+        }
         collectActions();
         sortActions();
         executeActions();
         isTurnOver = true;
+
+        // Recover AP for all involved in battle - for now, just recover to full-- will be more complex later
+        for(Entity battler : battlers){
+            battler.recoverAP(battler.getMaxAP() - battler.getCurrentAP());
+        }
     }
 
     private BattleAction makeBattleChoice(Entity chooser) {
+        if(chooser instanceof Player){
+            ui.printAP(chooser);
+        }
         int choice = validatePlayerInput(chooser);
         BattleAction action;
         switch (choice) {
@@ -174,8 +215,21 @@ public class BattleTurn {
 
     private Entity chooseTarget(Entity chooser) {
         ArrayList<Entity> others = new ArrayList<>();
-        others.addAll(battlers);
-        others.remove(chooser);
+        // Need safety check here possibly
+        if(chooser instanceof Player){
+            for(Entity enemy : enemies){
+                if(!enemy.checkDeath()){
+                    others.add(enemy);
+                }
+            }
+        }
+        if(chooser instanceof Enemy){
+            for(Entity player : players){
+                if(!player.checkDeath()){
+                    others.add(player);
+                }
+            }
+        }
         int choice = -1;
 
         if (chooser instanceof Player) {
@@ -205,10 +259,6 @@ public class BattleTurn {
         // Random choice by enemy
         int randomChoice = CommonConstants.RAND.nextInt(0, others.size());
         return others.get(randomChoice);
-    }
-
-    private int runAttack(Entity attacker, Entity defender) {
-        return defender.takeDamage(attacker.getAttack());
     }
 
 }

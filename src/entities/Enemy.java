@@ -12,7 +12,8 @@ public class Enemy extends Entity {
                 0,
                 0,
                 "Enemy",
-                "It's enemy!"
+                "It's enemy!",
+                10
         );
     }
 

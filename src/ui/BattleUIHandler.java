@@ -1,6 +1,7 @@
 package ui;
 
 import combat.BattleResult;
+import combat.actions.ActionType;
 import constants.CommonConstants;
 import constants.StringConstants;
 import entities.Entity;
@@ -54,13 +55,28 @@ public class BattleUIHandler {
         )];
     }
 
-    public void printPlayerChoose(){
-        String message = String.format(StringConstants.BATTLE_CHOICE);
+    public void printPlayerChoose(Entity choosingPlayer){
+        String message = String.format(
+                StringConstants.BATTLE_CHOICE,
+                ActionType.ATTACK.getName(),
+                choosingPlayer.calculateAPCost(ActionType.ATTACK.getApBaseCost()),
+                ActionType.DEFEND.getName(),
+                choosingPlayer.calculateAPCost(ActionType.DEFEND.getApBaseCost()),
+                ActionType.ITEM.getName(),
+                choosingPlayer.calculateAPCost(ActionType.ITEM.getApBaseCost()),
+                ActionType.RUN.getName(),
+                choosingPlayer.calculateAPCost(ActionType.RUN.getApBaseCost())
+        );
         render(message);
     }
 
     public void printInvalidChoose(int choices){
         String message = String.format(StringConstants.BATTLE_CHOICE_INVALID, choices);
+        render(message);
+    }
+
+    public void printAP(Entity subject){
+        String message = String.format(StringConstants.BATTLE_AP_PRINT, subject.getCurrentAP(),subject.getMaxAP());
         render(message);
     }
 
