@@ -1,0 +1,3 @@
+ISSUES:
+
+When enemy is dead, the selection process still continues; not properly exiting battle

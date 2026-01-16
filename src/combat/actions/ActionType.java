@@ -1,0 +1,55 @@
+package combat.actions;
+
+public enum ActionType {
+
+    ATTACK(
+            1,
+            "Attack",
+            1,
+            0
+    ),
+    DEFEND(
+            2,
+            "Defend",
+            1,
+            1
+    ),
+    ITEM(
+            3,
+            "Use an Item",
+            1,
+            0
+    ),
+    RUN(
+            4,
+            "Run",
+            1,
+            Integer.MAX_VALUE
+    );
+
+    private final int id, apBaseCost,priority;
+    private final String name;
+
+    ActionType(int id, String name, int apCost, int priority){
+        this.id = id;
+        this.name = name;
+        this.apBaseCost = apCost;
+        this.priority = priority;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getApBaseCost() {
+        return apBaseCost;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public String getName() {
+        return name;
+    }
+}

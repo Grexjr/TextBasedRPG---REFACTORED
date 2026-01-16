@@ -1,6 +1,8 @@
-import java.util.UUID;
+package entities;
 
-public class Enemy extends Entity{
+import constants.CommonConstants;
+
+public class Enemy extends Entity {
 
     public Enemy(){
         super(
@@ -10,7 +12,8 @@ public class Enemy extends Entity{
                 0,
                 0,
                 "Enemy",
-                "It's enemy!"
+                "It's enemy!",
+                10
         );
     }
 
