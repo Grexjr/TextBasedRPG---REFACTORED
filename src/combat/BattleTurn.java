@@ -60,6 +60,7 @@ public class BattleTurn {
     public void collectActions(){
         for(Entity battler : battlers){
             if (!parent.getBattleOver()) {
+                // Need way to check if battler can move or not -- or just have only an end turn button advance the phase
                 if (battler instanceof Player) {
                     // If player, print message informing them of inputs
                     ui.printPlayerChoose(battler);

@@ -36,6 +36,12 @@ public abstract class BattleAction {
         return !actor.checkDeath();
     }
 
-    public abstract void execute(BattleUIHandler ui);
+    public void useAP(Entity actor){
+        actor.consumeAP(apCostFinal);
+    }
+
+    public void execute(BattleUIHandler ui){
+        useAP(actor);
+    }
 
 }
