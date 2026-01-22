@@ -65,7 +65,8 @@ public class BattleUIHandler {
                 ActionType.ITEM.getName(),
                 choosingPlayer.calculateAPCost(ActionType.ITEM.getApBaseCost()),
                 ActionType.RUN.getName(),
-                choosingPlayer.calculateAPCost(ActionType.RUN.getApBaseCost())
+                choosingPlayer.calculateAPCost(ActionType.RUN.getApBaseCost()),
+                ActionType.END_TURN.getName()
         );
         render(message);
     }

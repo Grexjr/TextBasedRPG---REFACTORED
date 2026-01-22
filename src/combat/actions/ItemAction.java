@@ -12,7 +12,6 @@ public class ItemAction extends BattleAction {
 
     @Override
     public void execute(BattleUIHandler ui){
-        super.execute(ui);
         //TODO: Add item logic
         ui.printItem(getActor());
     }

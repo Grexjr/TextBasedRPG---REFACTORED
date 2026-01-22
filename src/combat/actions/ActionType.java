@@ -25,6 +25,12 @@ public enum ActionType {
             "Run",
             1,
             Integer.MAX_VALUE
+    ),
+    END_TURN(
+            5,
+            "End Turn",
+            0,
+            -1
     );
 
     private final int id, apBaseCost,priority;

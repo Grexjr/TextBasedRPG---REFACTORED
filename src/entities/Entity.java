@@ -16,7 +16,7 @@ public abstract class Entity {
     private String name,description;
 
     // Battle variables
-    private boolean isDefending;
+    private boolean isDefending, isDeciding;
 
     public Entity(int level, int maxHealth, int attack, int defense, int speed, String name, String description,
                   int maxAP){
@@ -34,6 +34,7 @@ public abstract class Entity {
         isDefending = false;
         this.maxAP = maxAP;
         this.currentAP = maxAP;
+        isDeciding = false;
     }
 
     @Override
@@ -92,6 +93,8 @@ public abstract class Entity {
 
     public int getCurrentAP(){return currentAP;}
 
+    public boolean getDeciding(){return isDeciding;}
+
     public void setLevel(int level) {
         this.level = level;
     }
@@ -129,6 +132,8 @@ public abstract class Entity {
     public void setMaxAP(int ap){this.maxAP = ap;}
 
     public void setCurrentAP(int ap){this.currentAP = ap;}
+
+    public void setDeciding(boolean deciding){this.isDeciding = deciding;}
 
     // Methods
     public String displayEntity(){

@@ -21,7 +21,7 @@ public class StringConstants {
     public static String[] DESCRIPTORS = {"evil","wanton","nefarious","disgusting","tricksy","putrid","scary"};
     // Battle ask for choice
     public static String BATTLE_CHOICE = "Choose your action!%n1. %s (%d)%n2. %s (%d)%n3. %s (%d)%n4. %s (%d)%n" +
-            SPACER_3 + "Input 1-4";
+            "5. %s%n" + SPACER_3 + "Input 1-4";
     public static String BATTLE_CHOICE_INVALID = SPACER_3 + "Please input 1-%d!";
     //Battle ask for target
     public static String BATTLE_TARGET = "Who is your target?%n" + SPACER_3 + "Input 1-%d";

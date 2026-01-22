@@ -1,6 +1,7 @@
 package combat;
 
 import combat.actions.*;
+import constants.BattleConstants;
 import constants.CommonConstants;
 import entities.Enemy;
 import entities.Entity;
@@ -60,17 +61,23 @@ public class BattleTurn {
     public void collectActions(){
         for(Entity battler : battlers){
             if (!parent.getBattleOver()) {
-                // Need way to check if battler can move or not -- or just have only an end turn button advance the phase
-                if (battler instanceof Player) {
-                    // If player, print message informing them of inputs
-                    ui.printPlayerChoose(battler);
+
+                battler.setDeciding(true);
+
+                while(battler.getDeciding()){
+                    if (battler instanceof Player) {
+                        // If player, print message informing them of inputs
+                        ui.printPlayerChoose(battler);
+                    }
+                    // Run battle choice
+                    BattleAction action = makeBattleChoice(battler);
+
+                    // Add it to the queue if not null
+                    if(action != null){
+                        actions.add(action);
+                    }
                 }
-                // Run battle choice
-                BattleAction action = makeBattleChoice(battler);
-                while(action == null){
-                    action = makeBattleChoice(battler);
-                }
-                actions.add(action);
+
             }
         }
     }
@@ -181,6 +188,10 @@ public class BattleTurn {
 
                 return checkAP(chooser,action);
             }
+            case 5 -> {
+                chooser.setDeciding(false);
+                return null;
+            }
             default -> {
                 //  Error state if no proper answer is chosen
                 ui.printError("BAD-INPUT");
@@ -191,6 +202,8 @@ public class BattleTurn {
 
     private BattleAction checkAP(Entity chooser, BattleAction action){
         if(chooser.hasAP(action.getApCostFinal())){
+            // Also spends AP when the move is selected, rather than when executed
+            action.useAP(chooser);
             return action;
         }
         ui.printNotEnoughAp(action.getType().getName());
@@ -200,14 +213,14 @@ public class BattleTurn {
     private int validatePlayerInput(Entity chooser) {
         // Validates if the players choice is within the proper range of options
         int choice = -1;
-        while (choice < 1 || choice > 4) {
+        while (choice < 1 || choice > BattleConstants.PLAYER_OPTION_COUNT) {
             try{
                 choice = chooser.makeBattleChoice();
-                if (choice < 1 || choice > 4) {
-                    ui.printInvalidChoose(4);
+                if (choice < 1 || choice > BattleConstants.PLAYER_OPTION_COUNT) {
+                    ui.printInvalidChoose(BattleConstants.PLAYER_OPTION_COUNT);
                 }
             } catch (InputMismatchException e){
-                ui.printInvalidChoose(4);
+                ui.printInvalidChoose(BattleConstants.PLAYER_OPTION_COUNT);
                 CommonConstants.SCAN.next();
             }
         }

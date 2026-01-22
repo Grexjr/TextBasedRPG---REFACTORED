@@ -40,8 +40,6 @@ public abstract class BattleAction {
         actor.consumeAP(apCostFinal);
     }
 
-    public void execute(BattleUIHandler ui){
-        useAP(actor);
-    }
+    public abstract void execute(BattleUIHandler ui);
 
 }

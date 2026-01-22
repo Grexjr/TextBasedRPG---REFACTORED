@@ -23,7 +23,14 @@ public class Enemy extends Entity {
      */
     @Override
     public int makeBattleChoice(){
-        return CommonConstants.RAND.nextInt(1,5);
+        int choice;
+        // While AP is greater than 1, choose random move
+        if(getCurrentAP() > 1){
+            choice = CommonConstants.RAND.nextInt(1,5);
+        } else {
+            choice = 5;
+        }
+        return choice;
     }
 
 
