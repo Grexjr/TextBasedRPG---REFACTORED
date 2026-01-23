@@ -1,3 +1,10 @@
+package entities;
+
+import combat.actions.ActionType;
+import combat.actions.BattleAction;
+import constants.CommonConstants;
+import constants.StringConstants;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -7,13 +14,14 @@ public abstract class Entity {
     private static final int DEFEND_MOD = 2;
 
     private final UUID id;
-    private int level,maxHealth,currentHealth,attack,defense,speed;
+    private int level,maxHealth,currentHealth,attack,defense,speed,maxAP,currentAP;
     private String name,description;
 
     // Battle variables
-    private boolean isDefending;
+    private boolean isDefending, isDeciding;
 
-    public Entity(int level, int maxHealth, int attack, int defense, int speed, String name, String description){
+    public Entity(int level, int maxHealth, int attack, int defense, int speed, String name, String description,
+                  int maxAP){
         id = UUID.randomUUID();
         this.level = level;
         this.maxHealth = maxHealth;
@@ -26,6 +34,9 @@ public abstract class Entity {
 
         // Battle variables
         isDefending = false;
+        this.maxAP = maxAP;
+        this.currentAP = maxAP;
+        isDeciding = false;
     }
 
     @Override
@@ -80,6 +91,12 @@ public abstract class Entity {
 
     public boolean getDefending(){return isDefending;}
 
+    public int getMaxAP(){return maxAP;}
+
+    public int getCurrentAP(){return currentAP;}
+
+    public boolean getDeciding(){return isDeciding;}
+
     public void setLevel(int level) {
         this.level = level;
     }
@@ -113,6 +130,12 @@ public abstract class Entity {
     }
 
     public void setDefending(boolean defending){this.isDefending = defending;}
+
+    public void setMaxAP(int ap){this.maxAP = ap;}
+
+    public void setCurrentAP(int ap){this.currentAP = ap;}
+
+    public void setDeciding(boolean deciding){this.isDeciding = deciding;}
 
     // Methods
     public String displayEntity(){
@@ -177,13 +200,33 @@ public abstract class Entity {
     public void defend(){isDefending = true;}
     public void endDefense(){isDefending = false;}
 
+    public void consumeAP(int consumption){
+        currentAP = Math.max(0,currentAP - consumption);
+    }
+
+    public void recoverAP(int recovery){
+        currentAP = Math.min(maxAP, currentAP + recovery);
+    }
+
+    public int calculateAPCost(ActionType action){
+        int finalAPCost = action.getApBaseCost();
+        // If run, takes the max AP of the entity
+        if(action.equals(ActionType.RUN)){
+            finalAPCost = this.getMaxAP();
+        }
+        return finalAPCost;
+    }
+
+    public boolean hasAP(int cost){
+        // True means has AP, false means does not have enough
+        return currentAP >= cost;
+    }
+
     public void resetBattleState(){
         endDefense();
     }
 
     // Abstract methods
     public abstract int makeBattleChoice();
-
-
 
 }

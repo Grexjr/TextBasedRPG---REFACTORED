@@ -1,0 +1,16 @@
+ISSUES:
+
+When enemy is dead, the selection process still continues; not properly exiting battle
+
+
+TODO:
+
+1. Change defense to be a bit less overpowered
+--- Add temporary stats to Entities that get changed when certain things are done--i.e. defending multiple times
+--- Make attacks break defenses--more complex later, but for now just subtracts from the temp defense
+
+2. Add actual enemies, and figure out how to store their data -- enum? JSON? I think enum at first, then individual
+methods within the enemy object classes that determine their stats based on the enum base levels.
+--- Add 3 enemies that are randomly selected at the start of the battle.
+
+3. Refactor the choose target method, removing some nesting, making the loops more efficient

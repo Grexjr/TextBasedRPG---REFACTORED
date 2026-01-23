@@ -1,3 +1,5 @@
+package constants;
+
 public class StringConstants {
 
     // All string outputs for the game
@@ -10,7 +12,7 @@ public class StringConstants {
     public static String SPACER_4 = " > ";
 
 
-    // Displaying Entity
+    // Displaying entities.Entity
     public static String ENTITY_DISPLAY = "%s%n%s%nLevel: %d%nHealth: %d/%d%nAttack: %d%nDefense: %d%nSpeed: %d%n";
 
     // Start Battle
@@ -18,14 +20,18 @@ public class StringConstants {
     public static String BATTLE_LIST = SPACER_1 + "%s %s %s appears!";
     public static String[] DESCRIPTORS = {"evil","wanton","nefarious","disgusting","tricksy","putrid","scary"};
     // Battle ask for choice
-    public static String BATTLE_CHOICE = "Choose your action!%n1. Attack%n2. Defend%n3. Use an item%n4. Run Away%n" +
-            SPACER_3 + "Input 1-4";
+    public static String BATTLE_CHOICE = "Choose your action!%n1. %s (%d)%n2. %s (%d)%n3. %s (%d)%n4. %s (%d)%n" +
+            "5. %s%n" + SPACER_3 + "Input 1-4";
     public static String BATTLE_CHOICE_INVALID = SPACER_3 + "Please input 1-%d!";
     //Battle ask for target
     public static String BATTLE_TARGET = "Who is your target?%n" + SPACER_3 + "Input 1-%d";
     public static String BATTLE_TARGET_LIST = "%d. %s";
+    // Battle AP costs
+    public static String BATTLE_AP_PRINT = "AP: %d/%d";
+    public static String BATTLE_AP_DEFICIT = "You're too tired to %s!";
     // Battle Attack
     public static String BATTLE_ATTACK = "%s attacks %s!%n%s takes %d damage!%n%s Health: %d/%d";
+    public static String BATTLE_ATTACK_NOTHING = "%s hits nothing!";
     // Battle Defend
     public static String BATTLE_DEFEND = "%s defends!";
     // Battle Item Use

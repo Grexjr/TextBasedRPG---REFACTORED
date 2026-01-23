@@ -1,6 +1,14 @@
+package ui;
+
+import combat.BattleResult;
+import combat.actions.ActionType;
+import constants.CommonConstants;
+import constants.StringConstants;
+import entities.Entity;
+import entities.Player;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BattleUIHandler {
 
@@ -47,13 +55,34 @@ public class BattleUIHandler {
         )];
     }
 
-    public void printPlayerChoose(){
-        String message = String.format(StringConstants.BATTLE_CHOICE);
+    public void printPlayerChoose(Entity choosingPlayer){
+        String message = String.format(
+                StringConstants.BATTLE_CHOICE,
+                ActionType.ATTACK.getName(),
+                choosingPlayer.calculateAPCost(ActionType.ATTACK),
+                ActionType.DEFEND.getName(),
+                choosingPlayer.calculateAPCost(ActionType.DEFEND),
+                ActionType.ITEM.getName(),
+                choosingPlayer.calculateAPCost(ActionType.ITEM),
+                ActionType.RUN.getName(),
+                choosingPlayer.calculateAPCost(ActionType.RUN),
+                ActionType.END_TURN.getName()
+        );
         render(message);
     }
 
     public void printInvalidChoose(int choices){
         String message = String.format(StringConstants.BATTLE_CHOICE_INVALID, choices);
+        render(message);
+    }
+
+    public void printAP(Entity subject){
+        String message = String.format(StringConstants.BATTLE_AP_PRINT, subject.getCurrentAP(),subject.getMaxAP());
+        render(message);
+    }
+
+    public void printNotEnoughAp(String actionName){
+        String message = String.format(StringConstants.BATTLE_AP_DEFICIT,actionName);
         render(message);
     }
 
@@ -81,6 +110,13 @@ public class BattleUIHandler {
                 target.getMaxHealth()
         );
         render(message);
+    }
+
+    public void printAttackNothing(Entity attacker){
+        String message = String.format(
+                StringConstants.BATTLE_ATTACK_NOTHING,
+                attacker.getName()
+        );
     }
 
     public void printDefense(Entity defender){
@@ -122,7 +158,7 @@ public class BattleUIHandler {
         render(message2);
     }
 
-    public void printBattleEnd(List<Entity> battlers,BattleResult battleEnd){
+    public void printBattleEnd(List<Entity> battlers, BattleResult battleEnd){
         switch(battleEnd){
             case VICTORY -> {
                 ArrayList<Entity> others = new ArrayList<>();
