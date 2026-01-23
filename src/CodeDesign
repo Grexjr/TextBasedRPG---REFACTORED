@@ -1,0 +1,10 @@
+Enemies:
+
+Similar to battle action, these will be enum-based.
+Each enum will contain the growth factors of each stat, and in the enemy class, there will be the basic formulas for
+stats for all enemies. They will use these base values to calculate enemy stats.
+
+
+
+
+

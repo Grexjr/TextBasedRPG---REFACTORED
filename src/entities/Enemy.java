@@ -1,8 +1,11 @@
 package entities;
 
 import constants.CommonConstants;
+import data.EnemySpecies;
 
 public class Enemy extends Entity {
+
+    private EnemySpecies species;
 
     public Enemy(){
         super(
@@ -15,6 +18,20 @@ public class Enemy extends Entity {
                 "It's enemy!",
                 10
         );
+    }
+
+    public Enemy(EnemySpecies species, int level){
+        super(
+                level,
+                species.calculateMaxHP(level),
+                species.calculateAttack(level),
+                species.calculateDefense(level),
+                species.calculateSpeed(level),
+                species.getName(),
+                species.getDescription(),
+                species.calculateMaxAP(level)
+        );
+        this.species = species;
     }
 
     /**
