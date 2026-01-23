@@ -31,7 +31,11 @@ public class Enemy extends Entity {
                 species.getDescription(),
                 species.calculateMaxAP(level)
         );
-        this.species = species;
+    }
+
+    private Enemy(int level, int maxHealth, int attack, int defense, int speed, String name, String description,
+                 int maxAP){
+        super(level,maxHealth,attack,defense,speed,name,description,maxAP);
     }
 
     /**

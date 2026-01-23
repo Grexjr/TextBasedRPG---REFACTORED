@@ -111,29 +111,31 @@ public class BattleTurn {
     }
 
     public void runTurn() {
+        // Check to make sure it doesn't keep running turns when enemy is dead
+        if(!parent.getBattleOver()){
+            // Checks if all players are dead, defeat if so
+            if (players.stream().allMatch(Entity::checkDeath)) {
+                parent.endBattle(BattleResult.DEFEAT);
+                return;
+            }
 
-        // Checks if all players are dead, defeat if so
-        if(players.stream().allMatch(Entity::checkDeath)){
-            parent.endBattle(BattleResult.DEFEAT);
-            return;
-        }
+            // Checks if all enemies are dead, victory if so
+            if (enemies.stream().allMatch(Entity::checkDeath)) {
+                parent.endBattle(BattleResult.VICTORY);
+                return;
+            }
 
-        // Checks if all enemies are dead, victory if so
-        if(enemies.stream().allMatch(Entity::checkDeath)){
-            parent.endBattle(BattleResult.VICTORY);
-            return;
-        }
+            collectActions();
+            sortActions();
+            executeActions();
+            isTurnOver = true;
 
-        collectActions();
-        sortActions();
-        executeActions();
-        isTurnOver = true;
-
-        // Recover AP for all involved in battle - for now, just recover to full-- will be more complex later
-        // Reset battle stats for all battlers
-        for(Entity battler : battlers){
-            battler.recoverAP(battler.getMaxAP() - battler.getCurrentAP());
-            battler.resetBattleState();
+            // Recover AP for all involved in battle - for now, just recover to full-- will be more complex later
+            // Reset battle stats for all battlers
+            for (Entity battler : battlers) {
+                battler.recoverAP(battler.getMaxAP() - battler.getCurrentAP());
+                battler.resetBattleState();
+            }
         }
     }
 

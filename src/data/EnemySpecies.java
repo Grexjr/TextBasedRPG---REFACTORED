@@ -4,18 +4,20 @@ import utilities.Calculator;
 
 public enum EnemySpecies {
 
+    // Negative values in enemy stats ensure level 1 stats are fair
+
     SLIME(
           "Slime",
           "A gooey, disgusting blob!",
-          10,
+          9,
           1.02,
-          1,
+          0,
           1.001,
-            0,
+            -1,
             1.05,
-            0,
+            -1,
             0.95,
-            10,
+            9,
             0.2
     );
 
