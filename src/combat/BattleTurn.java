@@ -98,56 +98,42 @@ public class BattleTurn {
             // 2. If user is dead, skip them (continue moves to next iteration of loop)
             if(action.getActor().checkDeath()) continue;
 
-            // 3. Clear flags from last turn
-            action.getActor().resetBattleState();
-
-            // 4. If move is valid, execute (user is alive, or for attacks, user and target are alive)
+            // 3. If move is valid, execute (user is alive, or for attacks, user and target are alive)
             if(action.isValid()){
                action.execute(ui);
             }
 
-            // 5. User is alive, but the isValid returned false (only for attack actions)
+            // 4. User is alive, but the isValid returned false (only for attack actions)
             else if(action instanceof AttackAction){
                 ui.printAttackNothing(action.getActor());
             }
         }
     }
 
-
-
-
-
-
     public void runTurn() {
-        int deadPlayers = 0;
-        int deadEnemies = 0;
 
-        // TODO: Use stream logic to refactor this; can check if all match a certain parameter
+        // Checks if all players are dead, defeat if so
+        if(players.stream().allMatch(Entity::checkDeath)){
+            parent.endBattle(BattleResult.DEFEAT);
+            return;
+        }
 
-        for(Entity player : players){
-            if(player.checkDeath()){
-                deadPlayers += 1;
-            }
-            if(deadPlayers == players.size()){
-                parent.endBattle(BattleResult.DEFEAT);
-            }
+        // Checks if all enemies are dead, victory if so
+        if(enemies.stream().allMatch(Entity::checkDeath)){
+            parent.endBattle(BattleResult.VICTORY);
+            return;
         }
-        for(Entity enemy : enemies){
-            if(enemy.checkDeath()){
-                deadEnemies += 1;
-            }
-            if(deadEnemies == enemies.size()){
-                parent.endBattle(BattleResult.VICTORY);
-            }
-        }
+
         collectActions();
         sortActions();
         executeActions();
         isTurnOver = true;
 
         // Recover AP for all involved in battle - for now, just recover to full-- will be more complex later
+        // Reset battle stats for all battlers
         for(Entity battler : battlers){
             battler.recoverAP(battler.getMaxAP() - battler.getCurrentAP());
+            battler.resetBattleState();
         }
     }
 
@@ -206,7 +192,10 @@ public class BattleTurn {
             action.useAP(chooser);
             return action;
         }
-        ui.printNotEnoughAp(action.getType().getName());
+
+        if(chooser instanceof Player){
+            ui.printNotEnoughAp(action.getType().getName());
+        }
         return null;
     }
 

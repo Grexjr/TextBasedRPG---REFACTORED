@@ -19,7 +19,7 @@ public abstract class BattleAction {
 
         this.priority = type.getPriority();
         // Calculates the ap cost based on user stats using the base ap cost; if no modifiers, returns the base cost
-        this.apCostFinal = actor.calculateAPCost(type.getApBaseCost());
+        this.apCostFinal = actor.calculateAPCost(type);
     }
 
     public ActionType getType(){return type;}

@@ -5,25 +5,25 @@ public enum ActionType {
     ATTACK(
             1,
             "Attack",
-            1,
+            3,
             0
     ),
     DEFEND(
             2,
             "Defend",
-            1,
+            5,
             1
     ),
     ITEM(
             3,
             "Use an Item",
-            1,
+            2,
             0
     ),
     RUN(
             4,
             "Run",
-            1,
+            0,
             Integer.MAX_VALUE
     ),
     END_TURN(

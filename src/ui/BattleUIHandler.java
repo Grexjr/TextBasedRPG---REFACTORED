@@ -59,13 +59,13 @@ public class BattleUIHandler {
         String message = String.format(
                 StringConstants.BATTLE_CHOICE,
                 ActionType.ATTACK.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ATTACK.getApBaseCost()),
+                choosingPlayer.calculateAPCost(ActionType.ATTACK),
                 ActionType.DEFEND.getName(),
-                choosingPlayer.calculateAPCost(ActionType.DEFEND.getApBaseCost()),
+                choosingPlayer.calculateAPCost(ActionType.DEFEND),
                 ActionType.ITEM.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ITEM.getApBaseCost()),
+                choosingPlayer.calculateAPCost(ActionType.ITEM),
                 ActionType.RUN.getName(),
-                choosingPlayer.calculateAPCost(ActionType.RUN.getApBaseCost()),
+                choosingPlayer.calculateAPCost(ActionType.RUN),
                 ActionType.END_TURN.getName()
         );
         render(message);
