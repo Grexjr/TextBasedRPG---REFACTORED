@@ -7,19 +7,6 @@ public class Enemy extends Entity {
 
     private EnemySpecies species;
 
-    public Enemy(){
-        super(
-                1,
-                10,
-                1,
-                0,
-                0,
-                "Enemy",
-                "It's enemy!",
-                10
-        );
-    }
-
     public Enemy(EnemySpecies species, int level){
         super(
                 level,

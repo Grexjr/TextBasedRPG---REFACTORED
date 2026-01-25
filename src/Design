@@ -5,3 +5,25 @@ Every encounter starts with 0 AP on both sides; but if one side surprises the ot
 Before an encounter, get chance to surprise; rolls a dice if successful? but if you fail, the enemy gets 5 AP...
 -- It's hard to add gameplay to a text based game that isnt chance and strategy-- but it does at least add some risk
 and reward behavior, based on player health etc.
+
+
+
+DEFENSE:
+1. Defense is based on an entity's health. The philosophy is that larger, bulkier entities can defend better and more
+than smaller ones. This also incentivizes tank builds to go all-out tank at the expense of other stats.
+--- IN IMPLEMENTATION
+    1. Temporary defense value is increased by the defend action.
+    2. The base gain is determined by the defense stat of the entity. Better defenders get a bigger one time gain.
+    3. The half life value is determined by health; essentially, the more health you have, the more times you can defend
+    effectively.
+Numbers:
+- Base gain of defense will be 1.5x defense stat rounded down // can change
+- Half life value will be determined by 5% of max health // can change
+- FORMULA:  gain = (defense * 1.5) / (1 + (currentTemp/HalfLife))
+
+2. Defense and temp defense both go into defending the player, but additively. Armor will have relatively low defense
+additions, which encourages using defense against strong enemies but allows dealing quickly with weak ones. Armor will
+also have a defense efficiency stat, which reduce the amount of AP defending takes, so you can defend more easily.
+
+3. One day, I will do something more interesting with defense to prevent full 0 damage; a curve, for example. But not
+yet. // TODO

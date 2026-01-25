@@ -2,6 +2,7 @@ package entities;
 
 import combat.actions.ActionType;
 import combat.actions.BattleAction;
+import constants.BattleConstants;
 import constants.CommonConstants;
 import constants.StringConstants;
 
@@ -18,7 +19,8 @@ public abstract class Entity {
     private String name,description;
 
     // Battle variables
-    private boolean isDefending, isDeciding;
+    private boolean isDefending = false, isDeciding = false;
+    private int tempDefense = 0;
 
     public Entity(int level, int maxHealth, int attack, int defense, int speed, String name, String description,
                   int maxAP){
@@ -33,10 +35,8 @@ public abstract class Entity {
         this.description = description;
 
         // Battle variables
-        isDefending = false;
         this.maxAP = maxAP;
         this.currentAP = maxAP;
-        isDeciding = false;
     }
 
     @Override
@@ -95,6 +95,8 @@ public abstract class Entity {
 
     public int getCurrentAP(){return currentAP;}
 
+    public int getTempDefense(){return tempDefense;}
+
     public boolean getDeciding(){return isDeciding;}
 
     public void setLevel(int level) {
@@ -134,6 +136,8 @@ public abstract class Entity {
     public void setMaxAP(int ap){this.maxAP = ap;}
 
     public void setCurrentAP(int ap){this.currentAP = ap;}
+
+    public void setTempDefense(int tempDefense){this.tempDefense = tempDefense;}
 
     public void setDeciding(boolean deciding){this.isDeciding = deciding;}
 
@@ -189,16 +193,34 @@ public abstract class Entity {
      * @return The adjusted damage value, clamped to 0.
      */
     private int calcDamage(int rawDamage){
-        if(isDefending){
-            int defDamage = rawDamage / DEFEND_MOD;
-            return Math.max(0,defDamage - defense);
-        }
-        return Math.max(0,rawDamage - defense);
+        return Math.max(0,rawDamage - (defense + tempDefense));
     }
 
     // Battle methods
-    public void defend(){isDefending = true;}
-    public void endDefense(){isDefending = false;}
+    public void defend(){
+        // Adds new temporary defense gain to the already existing temporary defense
+        setTempDefense(tempDefense + calculateDefenseGain());
+    }
+
+    private int calculateDefenseGain(){
+        // Defense times the base gain value
+        double baseGain = defense * BattleConstants.DEFEND_DEFENSE_RATIO;
+
+        // Half-life/sensitivity is 15% of max health (so when temp defense = 10% of max health, efficacy halved)
+        double halfLife = maxHealth * BattleConstants.DEFENSE_HALF_LIFE_HP_RATIO;
+
+        // The minimum defense if values are too low that gets added constantly with no fall off
+        int minimumDefense = 1;
+
+        // Formula: gain = baseGain / (1 + (tempDefense / halfLife))
+        double gain = Math.max(minimumDefense,baseGain / (1 + (tempDefense / halfLife)));
+
+        return Math.toIntExact(Math.round(gain));
+    }
+
+    public void endDefense(){
+        tempDefense = 0;
+    }
 
     public void consumeAP(int consumption){
         currentAP = Math.max(0,currentAP - consumption);

@@ -19,6 +19,20 @@ public enum EnemySpecies {
             0.95,
             9,
             0.2
+    ),
+    SKELETON(
+            "Skeleton",
+            "A bony creature!",
+            4,
+            0.9,
+            1,
+            1.05,
+            -1,
+            0.5,
+            1,
+            1.15,
+            9,
+            0.7
     );
 
     private final String name, description;
