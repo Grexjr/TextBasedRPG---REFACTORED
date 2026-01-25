@@ -8,7 +8,7 @@ public class Player extends Entity {
         super(
                 1,
                 20,
-                1,
+                10,
                 0,
                 1,
                 "Player",

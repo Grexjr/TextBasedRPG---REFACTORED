@@ -1,20 +1,28 @@
 package entities;
 
 import constants.CommonConstants;
+import data.EnemySpecies;
 
 public class Enemy extends Entity {
 
-    public Enemy(){
+    private EnemySpecies species;
+
+    public Enemy(EnemySpecies species, int level){
         super(
-                1,
-                10,
-                1,
-                0,
-                0,
-                "Enemy",
-                "It's enemy!",
-                10
+                level,
+                species.calculateMaxHP(level),
+                species.calculateAttack(level),
+                species.calculateDefense(level),
+                species.calculateSpeed(level),
+                species.getName(),
+                species.getDescription(),
+                species.calculateMaxAP(level)
         );
+    }
+
+    private Enemy(int level, int maxHealth, int attack, int defense, int speed, String name, String description,
+                 int maxAP){
+        super(level,maxHealth,attack,defense,speed,name,description,maxAP);
     }
 
     /**
