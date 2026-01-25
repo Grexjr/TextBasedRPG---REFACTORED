@@ -33,6 +33,20 @@ public enum EnemySpecies {
             1.15,
             9,
             0.7
+    ),
+    CYBERNETIC_ROCK(
+            "Cybernetic Rock",
+            "A cybernetically enhanced... boulder?",
+            20,
+            1.1,
+            2,
+            1.05,
+            1,
+            1.1,
+            0,
+            0.3,
+            5,
+            0.25
     );
 
     private final String name, description;
