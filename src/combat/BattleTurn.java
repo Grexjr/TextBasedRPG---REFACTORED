@@ -11,6 +11,7 @@ import ui.BattleUIHandler;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.InputMismatchException;
+import java.util.stream.Collectors;
 
 public class BattleTurn {
 
@@ -220,50 +221,56 @@ public class BattleTurn {
 
     private Entity chooseTarget(Entity chooser) {
         ArrayList<Entity> others = new ArrayList<>();
-        // Need safety check here possibly
-        if(chooser instanceof Player){
-            for(Entity enemy : enemies){
-                if(!enemy.checkDeath()){
-                    others.add(enemy);
-                }
-            }
-        }
-        if(chooser instanceof Enemy){
-            for(Entity player : players){
-                if(!player.checkDeath()){
-                    others.add(player);
-                }
-            }
-        }
         int choice = -1;
 
-        if (chooser instanceof Player) {
+        // Need safety check here possibly
+        if(chooser instanceof Player){
+            // Using stream logic, create the collection of enemies to choose from
+            others.addAll(
+                    enemies.stream()
+                            .filter(enemy -> !enemy.checkDeath())
+                            .collect(Collectors.toList())
+            );
+
             if(others.size() > 1){
-                //Displaying
-                ui.printTargetChoice(others);
-
-                for (int i = 0; i < others.size(); i++) {
-                    ui.printTargetOptions(others);
-                }
-
-                while(choice < 1 || choice > others.size()){
-                    try {
-                        choice = CommonConstants.SCAN.nextInt();
-                        if(choice < 1 || choice > others.size()){
-                            ui.printInvalidChoose(others.size());
-                        }
-                    } catch (InputMismatchException e) {
-                        ui.printInvalidChoose(others.size());
-                        CommonConstants.SCAN.next();
-                    }
-                }
-                return others.get(choice - 1);
+                return runTargetChoice(choice,others);
             }
             return others.getFirst();
         }
+
+        if(chooser instanceof Enemy){
+            // Using stream logic, create the collection of players to choose from
+            others.addAll(
+                    players.stream()
+                            .filter(player -> !player.checkDeath())
+                            .collect(Collectors.toList())
+            );
+        }
+
         // Random choice by enemy
         int randomChoice = CommonConstants.RAND.nextInt(0, others.size());
         return others.get(randomChoice);
+    }
+
+    private Entity runTargetChoice(int choice, ArrayList<Entity> others){
+        // Print prompt for input and target choices if there is more than one
+        ui.printTargetChoice(others);
+
+        for (int i = 0; i < others.size(); i++) {
+            ui.printTargetOptions(others);
+        }
+        while(choice < 1 || choice > others.size()){
+            try {
+                choice = CommonConstants.SCAN.nextInt();
+                if(choice < 1 || choice > others.size()){
+                    ui.printInvalidChoose(others.size());
+                }
+            } catch (InputMismatchException e) {
+                ui.printInvalidChoose(others.size());
+                CommonConstants.SCAN.next();
+            }
+        }
+        return others.get(choice - 1);
     }
 
 }

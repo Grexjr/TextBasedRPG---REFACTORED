@@ -5,9 +5,9 @@ When enemy is dead, the selection process still continues; not properly exiting 
 
 TODO:
 
-1. Change defense to be a bit less overpowered
---- Add temporary stats to Entities that get changed when certain things are done--i.e. defending multiple times
---- Make attacks break defenses--more complex later, but for now just subtracts from the temp defense
+1. Make damage more complex (create a damage curve based on defense rather than flat subtraction. Also add breaking
+defense by attacking (each attack subtracts temporary defense, even into negative, for combo breaks)). Also add piercing
+to weaponry to bypass some defense, or destroy defense better.
 
 2. Add randomly selected enemies between 3
 

@@ -210,7 +210,7 @@ public abstract class Entity {
         double halfLife = maxHealth * BattleConstants.DEFENSE_HALF_LIFE_HP_RATIO;
 
         // The minimum defense if values are too low that gets added constantly with no fall off
-        int minimumDefense = 1;
+        int minimumDefense = BattleConstants.MINIMUM_DEFENSE;
 
         // Formula: gain = baseGain / (1 + (tempDefense / halfLife))
         double gain = Math.max(minimumDefense,baseGain / (1 + (tempDefense / halfLife)));
