@@ -27,3 +27,11 @@ also have a defense efficiency stat, which reduce the amount of AP defending tak
 
 3. One day, I will do something more interesting with defense to prevent full 0 damage; a curve, for example. But not
 yet. // TODO
+
+
+ROOMS:
+- ENEMY APPEARANCE
+1. Enemy appearance starts at a baseline of the base chance, and every subsequent enemy decreases the chance (based on
+the difficulty of the floor of the dungeon).
+Numbers:
+- FORMULA: chance = (baseChance) / (1 + ((baseChance x numEnemies) / floorDifficulty))

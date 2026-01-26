@@ -6,5 +6,8 @@ stats for all enemies. They will use these base values to calculate enemy stats.
 
 
 
+ROOMS:
 
-
+Will use a graph, with a map to represent all the world that room A is connected to (interestingly, is O(1) rather than
+O(n), since arrayList you will have to go through the entire thing.
+Will need a DungeonManager for room traversal. Handles between room traversal, room generation, etc.
