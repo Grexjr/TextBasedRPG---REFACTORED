@@ -1,6 +1,9 @@
 package world;
 
 import constants.CommonConstants;
+import data.EnemySpecies;
+import data.RoomType;
+import entities.Enemy;
 import entities.Entity;
 
 import java.util.ArrayList;
@@ -47,7 +50,9 @@ public class Room {
 
     private void spawnEnemy(){
         while(canSpawnEnemy()){
-            // Need random selection for enemy here, then add them to the arraylist
+            // Need random selection for enemy here, then add them to the arraylist... for now just slime
+            // Will probably do some calculation to floor difficulty for enemy level
+            enemies.add(new Enemy(EnemySpecies.SLIME,parent.getDifficulty()));
         }
     }
 

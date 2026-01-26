@@ -2,6 +2,7 @@ package world;
 
 import constants.CommonConstants;
 import constants.WorldConstants;
+import data.RoomType;
 
 public class DungeonManager {
 

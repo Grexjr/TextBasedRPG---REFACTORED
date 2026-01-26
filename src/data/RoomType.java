@@ -1,4 +1,4 @@
-package world;
+package data;
 
 public enum RoomType {
 
