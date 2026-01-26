@@ -10,7 +10,8 @@ public enum RoomType {
             75.0,
             50.0,
             5.0,
-            1.0
+            1.0,
+            new String[]{"SLIME","SKELETON","CYBERNETIC_ROCK"}
     ),
     COMPLEX_ROOM(
             "Complex room",
@@ -20,15 +21,17 @@ public enum RoomType {
             10.0,
             2.0,
             15.0,
-            90.0
+            90.0,
+            new String[]{"SLIME","SKELETON","CYBERNETIC_ROCK"}
     );
 
     private final String name, description;
     private final double appearanceChanceRaw,encounterChance, trapChanceRaw,enemyChanceRaw,treasureChanceRaw,
             secretChanceBaseRaw;
+    private final String[] enemyPool;
 
     RoomType(String name, String description, double appearanceChance, double encounterChance, double trapChance,
-             double enemyChance, double treasureChance, double secretChanceBase){
+             double enemyChance, double treasureChance, double secretChanceBase, String[] enemyPool){
         // All probabilities are doubles out of 100
         this.name = name;
         this.description = description;
@@ -38,6 +41,8 @@ public enum RoomType {
         this.enemyChanceRaw = enemyChance;
         this.treasureChanceRaw = treasureChance;
         this.secretChanceBaseRaw = secretChanceBase;
+
+        this.enemyPool = enemyPool;
     }
 
     public String getName() {
