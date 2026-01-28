@@ -10,14 +10,14 @@ public class AttackAction extends BattleAction{
     private final Entity target;
 
     public AttackAction(BattleScene scene, Entity user, Entity target){
-        super(BattleActionType.ATTACK,scene, user);
+        super(BattleActionType.ATTACK,user, scene);
         this.target = target;
     }
 
     public Entity getTarget(){return target;}
 
     @Override
-    public boolean isValid(){
+    public boolean isActorAlive(){
         return !getActor().checkDeath() && !target.checkDeath();
     }
 

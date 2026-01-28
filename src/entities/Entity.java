@@ -4,6 +4,7 @@ import data.BattleActionType;
 import constants.BattleConstants;
 import constants.CommonConstants;
 import constants.StringConstants;
+import data.GameActionType;
 
 import java.util.List;
 import java.util.UUID;
@@ -229,7 +230,7 @@ public abstract class Entity {
         currentAP = Math.min(maxAP, currentAP + recovery);
     }
 
-    public int calculateAPCost(BattleActionType action){
+    public int calculateAPCost(GameActionType action){
         int finalAPCost = action.getApBaseCost();
         // If run, takes the max AP of the entity
         if(action.equals(BattleActionType.RUN)){

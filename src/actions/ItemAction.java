@@ -8,7 +8,7 @@ import ui.BattleUIHandler;
 public class ItemAction extends BattleAction {
 
     public ItemAction(BattleScene scene, Entity user){
-        super(BattleActionType.ITEM,scene, user);
+        super(BattleActionType.ITEM, user, scene);
     }
 
     @Override

@@ -8,7 +8,7 @@ import ui.BattleUIHandler;
 public class DefendAction extends BattleAction {
 
     public DefendAction(BattleScene scene, Entity user){
-        super(BattleActionType.DEFEND,scene, user);
+        super(BattleActionType.DEFEND, user, scene);
     }
 
     @Override

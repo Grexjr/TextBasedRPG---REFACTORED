@@ -100,7 +100,7 @@ public class BattleTurn {
             if(action.getActor().checkDeath()) continue;
 
             // 3. If move is valid, execute (user is alive, or for attacks, user and target are alive)
-            if(action.isValid()){
+            if(action.isActorAlive()){
                action.execute(ui);
             }
 
@@ -190,9 +190,9 @@ public class BattleTurn {
     }
 
     private BattleAction checkAP(Entity chooser, BattleAction action){
-        if(chooser.hasAP(action.getApCostFinal())){
+        if(chooser.hasAP(action.getAPCostFinal())){
             // Also spends AP when the move is selected, rather than when executed
-            action.useAP(chooser);
+            action.useAP();
             return action;
         }
 

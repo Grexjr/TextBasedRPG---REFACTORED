@@ -14,7 +14,7 @@ public class RunAction extends BattleAction {
     private final ArrayList<Entity> runFroms;
 
     public RunAction(BattleScene scene, Entity user, ArrayList<Entity> runFroms){
-        super(BattleActionType.RUN,scene, user);
+        super(BattleActionType.RUN, user, scene);
         this.runFroms = runFroms;
     }
 
