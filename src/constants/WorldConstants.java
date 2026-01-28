@@ -10,6 +10,8 @@ public class WorldConstants {
     public static final int MIN_FLOORS = 5;
     // Max floors per dungeon
     public static final int MAX_FLOORS = 10;
+    // Global rare enemy spawn chance | TODO: CHANGE
+    public static final double GLOBAL_RARE_ENEMY_CHANCE = 0.1;
 
 
 
