@@ -25,6 +25,11 @@ public class Floor {
 
     public void setDifficulty(int difficulty){this.difficulty = difficulty;}
 
+    public void populateFloor(int index, Room room){
+        String code = room.getType().getID() + "-ID-" + index;
+        roomLayout.put(code, room);
+    }
+
     private int calculateDifficulty(){
         return 1;
     }
