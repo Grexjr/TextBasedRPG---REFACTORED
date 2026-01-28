@@ -1,6 +1,6 @@
 package combat;
 
-import combat.actions.*;
+import actions.*;
 import constants.BattleConstants;
 import constants.CommonConstants;
 import entities.Enemy;

@@ -12,9 +12,11 @@ public interface UIHandler {
     }
 
     default void makeCustomSpacer(char spacer, int length){
+        StringBuilder sb = new StringBuilder();
         for(int i = 0; i < length; i++){
-            render(String.valueOf(spacer));
+            sb.append(spacer);
         }
+        render(sb.toString());
     }
 
     default String selectArticle(String word){

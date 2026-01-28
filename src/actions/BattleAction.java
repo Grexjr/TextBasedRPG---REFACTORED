@@ -1,18 +1,19 @@
-package combat.actions;
+package actions;
 
 import combat.BattleScene;
+import data.BattleActionType;
 import entities.Entity;
 import ui.BattleUIHandler;
 
 public abstract class BattleAction {
 
-    private final ActionType type;
+    private final BattleActionType type;
     private final BattleScene scene;
     private final Entity actor;
     private final int priority;
     private int apCostFinal; // Maybe make final?
 
-    public BattleAction(ActionType type, BattleScene scene, Entity actor){
+    public BattleAction(BattleActionType type, BattleScene scene, Entity actor){
         this.type = type;
         this.scene = scene;
         this.actor = actor;
@@ -22,7 +23,7 @@ public abstract class BattleAction {
         this.apCostFinal = actor.calculateAPCost(type);
     }
 
-    public ActionType getType(){return type;}
+    public BattleActionType getType(){return type;}
 
     public BattleScene getScene(){return scene;}
 

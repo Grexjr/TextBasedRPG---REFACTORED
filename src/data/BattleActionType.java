@@ -1,6 +1,8 @@
-package combat.actions;
+package data;
 
-public enum ActionType {
+import actions.GameAction;
+
+public enum BattleActionType implements GameAction {
 
     ATTACK(
             1,
@@ -36,25 +38,29 @@ public enum ActionType {
     private final int id, apBaseCost,priority;
     private final String name;
 
-    ActionType(int id, String name, int apCost, int priority){
+    BattleActionType(int id, String name, int apCost, int priority){
         this.id = id;
         this.name = name;
         this.apBaseCost = apCost;
         this.priority = priority;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public int getApBaseCost() {
         return apBaseCost;
     }
 
+    @Override
     public int getPriority() {
         return priority;
     }
 
+    @Override
     public String getName() {
         return name;
     }

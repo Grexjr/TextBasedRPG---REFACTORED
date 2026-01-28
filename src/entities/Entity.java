@@ -1,7 +1,6 @@
 package entities;
 
-import combat.actions.ActionType;
-import combat.actions.BattleAction;
+import data.BattleActionType;
 import constants.BattleConstants;
 import constants.CommonConstants;
 import constants.StringConstants;
@@ -230,10 +229,10 @@ public abstract class Entity {
         currentAP = Math.min(maxAP, currentAP + recovery);
     }
 
-    public int calculateAPCost(ActionType action){
+    public int calculateAPCost(BattleActionType action){
         int finalAPCost = action.getApBaseCost();
         // If run, takes the max AP of the entity
-        if(action.equals(ActionType.RUN)){
+        if(action.equals(BattleActionType.RUN)){
             finalAPCost = this.getMaxAP();
         }
         return finalAPCost;

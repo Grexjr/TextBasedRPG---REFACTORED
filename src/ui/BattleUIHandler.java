@@ -1,8 +1,7 @@
 package ui;
 
 import combat.BattleResult;
-import combat.actions.ActionType;
-import constants.CommonConstants;
+import data.BattleActionType;
 import constants.StringConstants;
 import entities.Entity;
 import entities.Player;
@@ -34,15 +33,15 @@ public class BattleUIHandler implements UIHandler {
     public void printPlayerChoose(Entity choosingPlayer){
         String message = String.format(
                 StringConstants.BATTLE_CHOICE,
-                ActionType.ATTACK.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ATTACK),
-                ActionType.DEFEND.getName(),
-                choosingPlayer.calculateAPCost(ActionType.DEFEND),
-                ActionType.ITEM.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ITEM),
-                ActionType.RUN.getName(),
-                choosingPlayer.calculateAPCost(ActionType.RUN),
-                ActionType.END_TURN.getName()
+                BattleActionType.ATTACK.getName(),
+                choosingPlayer.calculateAPCost(BattleActionType.ATTACK),
+                BattleActionType.DEFEND.getName(),
+                choosingPlayer.calculateAPCost(BattleActionType.DEFEND),
+                BattleActionType.ITEM.getName(),
+                choosingPlayer.calculateAPCost(BattleActionType.ITEM),
+                BattleActionType.RUN.getName(),
+                choosingPlayer.calculateAPCost(BattleActionType.RUN),
+                BattleActionType.END_TURN.getName()
         );
         render(message);
     }
