@@ -18,7 +18,8 @@ public class StringConstants {
     // Start Battle
     public static final String BATTLE_HEADER = "=============== BATTLE BEGINS ===============";
     public static final String BATTLE_LIST = SPACER_1 + "%s %s %s appears!";
-    public static final String[] DESCRIPTORS = {"evil","wanton","nefarious","disgusting","tricksy","putrid","scary"};
+    public static final String[] ENEMY_DESCRIPTORS = {"evil","wanton","nefarious","disgusting","tricksy",
+            "putrid","scary"};
     // Battle ask for choice
     public static final String BATTLE_CHOICE = "Choose your action!%n1. %s (%d)%n2. %s (%d)%n3. %s (%d)%n4. %s (%d)%n" +
             "5. %s%n" + SPACER_3 + "Input 1-4";
@@ -47,6 +48,10 @@ public class StringConstants {
     public static final String BATTLE_ESCAPED_ENEMY = "The battlefield is empty...";
     public static final String BATTLE_INTERRUPT = "%s has interrupted the battle!";
     public static final String BATTLE_OVER = "================ BATTLE OVER ================";
+
+    // ROOM STRINGS
+    // Enter Room String
+    public static final String ENTER_ROOM = "You enter a %s room...";
 
 
 

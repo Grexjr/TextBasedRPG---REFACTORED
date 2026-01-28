@@ -10,15 +10,7 @@ import entities.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattleUIHandler {
-
-    public void printError(String errorMessage){
-        String message = String.format(
-                StringConstants.ERROR_STRING,
-                errorMessage
-        );
-        render(message);
-    }
+public class BattleUIHandler implements UIHandler {
 
     public void printBattleStart(List<Entity> battlers){
         render(StringConstants.BATTLE_HEADER);
@@ -26,7 +18,7 @@ public class BattleUIHandler {
         for(Entity e : battlers){
             if(!(e instanceof Player)){
                 String name = e.getName();
-                String descriptor = selectDescriptor();
+                String descriptor = selectDescriptor(StringConstants.ENEMY_DESCRIPTORS);
                 String message = String.format(
                         StringConstants.BATTLE_LIST,
                         selectArticle(descriptor),
@@ -37,22 +29,6 @@ public class BattleUIHandler {
             }
         }
         render(StringConstants.PAGE_BREAK);
-    }
-
-    private String selectArticle(String word){
-        char firstLetter = Character.toLowerCase(word.charAt(0));
-        if("aeiou".indexOf(firstLetter) != -1){
-            return "An";
-        }
-        return "A";
-    }
-
-    private String selectDescriptor(){
-        return StringConstants.DESCRIPTORS[
-                CommonConstants.RAND.nextInt(
-                0,
-                StringConstants.DESCRIPTORS.length
-        )];
     }
 
     public void printPlayerChoose(Entity choosingPlayer){
@@ -192,19 +168,5 @@ public class BattleUIHandler {
         }
         render(StringConstants.BATTLE_OVER);
     }
-
-    private void render(String text){
-        System.out.println(text);
-    }
-
-    private void makeCustomSpacer(char spacer, int length){
-        for(int i = 0; i < length; i++){
-            render(String.valueOf(spacer));
-        }
-    }
-
-
-
-
 
 }
