@@ -19,7 +19,7 @@ public class RunAction extends BattleAction {
     }
 
     @Override
-    public void execute(BattleUIHandler ui){
+    public void executeBattleAction(BattleUIHandler ui){
         boolean runSuccess = getActor().attemptRun(runFroms);
         ui.printRun(getActor(),runSuccess);
         if(runSuccess){

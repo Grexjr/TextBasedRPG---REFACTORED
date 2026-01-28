@@ -1,8 +1,10 @@
 package actions;
 
+import entities.Entity;
+import ui.UIHandler;
+
 public interface GameAction {
-    int getId();
-    int getApBaseCost();
-    int getPriority();
-    String getName();
+
+    void execute(UIHandler ui);
+
 }

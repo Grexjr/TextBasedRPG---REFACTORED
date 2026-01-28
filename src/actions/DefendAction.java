@@ -12,7 +12,7 @@ public class DefendAction extends BattleAction {
     }
 
     @Override
-    public void execute(BattleUIHandler ui){
+    public void executeBattleAction(BattleUIHandler ui){
         getActor().defend();
         ui.printDefense(getActor());
     }

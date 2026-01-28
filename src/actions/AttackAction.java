@@ -22,7 +22,7 @@ public class AttackAction extends BattleAction{
     }
 
     @Override
-    public void execute(BattleUIHandler ui){
+    public void executeBattleAction(BattleUIHandler ui){
         int damage = target.takeDamage(getActor().getAttack());
         ui.printAttack(getActor(),target,damage);
     }

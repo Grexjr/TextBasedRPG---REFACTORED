@@ -1,8 +1,6 @@
 package data;
 
-import actions.GameAction;
-
-public enum BattleActionType implements GameAction {
+public enum BattleActionType implements GameActionType {
 
     ATTACK(
             1,
