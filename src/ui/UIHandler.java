@@ -48,9 +48,12 @@ public interface UIHandler {
         render(message);
     }
 
-    default void printActions(List<GameActionType> actions, Entity chooser){
-        //TODO: Now need a way to get the actions into a list
+    default void printActions(List<? extends GameActionType> actions, Entity chooser){
         String actionString;
+
+        // Always renders the action header and input request
+        render(StringConstants.ACTION_HEADER);
+        render(String.format(StringConstants.INPUT_REQUEST_STRING,actions.size()));
 
         // Sort actions
         actions.sort(
