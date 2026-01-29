@@ -1,17 +1,18 @@
-package combat.actions;
+package actions;
 
 import combat.BattleScene;
+import data.BattleActionType;
 import entities.Entity;
 import ui.BattleUIHandler;
 
 public class ItemAction extends BattleAction {
 
     public ItemAction(BattleScene scene, Entity user){
-        super(ActionType.ITEM,scene, user);
+        super(BattleActionType.ITEM, user, scene);
     }
 
     @Override
-    public void execute(BattleUIHandler ui){
+    public void executeBattleAction(BattleUIHandler ui){
         //TODO: Add item logic
         ui.printItem(getActor());
     }

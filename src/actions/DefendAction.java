@@ -1,17 +1,18 @@
-package combat.actions;
+package actions;
 
 import combat.BattleScene;
+import data.BattleActionType;
 import entities.Entity;
 import ui.BattleUIHandler;
 
 public class DefendAction extends BattleAction {
 
     public DefendAction(BattleScene scene, Entity user){
-        super(ActionType.DEFEND,scene, user);
+        super(BattleActionType.DEFEND, user, scene);
     }
 
     @Override
-    public void execute(BattleUIHandler ui){
+    public void executeBattleAction(BattleUIHandler ui){
         getActor().defend();
         ui.printDefense(getActor());
     }

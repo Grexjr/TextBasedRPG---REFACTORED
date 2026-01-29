@@ -1,8 +1,8 @@
 package ui;
 
 import combat.BattleResult;
-import combat.actions.ActionType;
-import constants.CommonConstants;
+import data.ActionTypeRegistry;
+import data.BattleActionType;
 import constants.StringConstants;
 import entities.Entity;
 import entities.Player;
@@ -10,15 +10,7 @@ import entities.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattleUIHandler {
-
-    public void printError(String errorMessage){
-        String message = String.format(
-                StringConstants.ERROR_STRING,
-                errorMessage
-        );
-        render(message);
-    }
+public class BattleUIHandler implements UIHandler {
 
     public void printBattleStart(List<Entity> battlers){
         render(StringConstants.BATTLE_HEADER);
@@ -26,7 +18,7 @@ public class BattleUIHandler {
         for(Entity e : battlers){
             if(!(e instanceof Player)){
                 String name = e.getName();
-                String descriptor = selectDescriptor();
+                String descriptor = selectDescriptor(StringConstants.ENEMY_DESCRIPTORS);
                 String message = String.format(
                         StringConstants.BATTLE_LIST,
                         selectArticle(descriptor),
@@ -39,36 +31,9 @@ public class BattleUIHandler {
         render(StringConstants.PAGE_BREAK);
     }
 
-    private String selectArticle(String word){
-        char firstLetter = Character.toLowerCase(word.charAt(0));
-        if("aeiou".indexOf(firstLetter) != -1){
-            return "An";
-        }
-        return "A";
-    }
-
-    private String selectDescriptor(){
-        return StringConstants.DESCRIPTORS[
-                CommonConstants.RAND.nextInt(
-                0,
-                StringConstants.DESCRIPTORS.length
-        )];
-    }
-
+    // TODO: Get rid of this method and replace instances with the superclass method
     public void printPlayerChoose(Entity choosingPlayer){
-        String message = String.format(
-                StringConstants.BATTLE_CHOICE,
-                ActionType.ATTACK.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ATTACK),
-                ActionType.DEFEND.getName(),
-                choosingPlayer.calculateAPCost(ActionType.DEFEND),
-                ActionType.ITEM.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ITEM),
-                ActionType.RUN.getName(),
-                choosingPlayer.calculateAPCost(ActionType.RUN),
-                ActionType.END_TURN.getName()
-        );
-        render(message);
+        printActions(ActionTypeRegistry.getBattleActionTypes(), choosingPlayer);
     }
 
     public void printInvalidChoose(int choices){
@@ -117,6 +82,7 @@ public class BattleUIHandler {
                 StringConstants.BATTLE_ATTACK_NOTHING,
                 attacker.getName()
         );
+        render(message);
     }
 
     public void printDefense(Entity defender){
@@ -192,19 +158,5 @@ public class BattleUIHandler {
         }
         render(StringConstants.BATTLE_OVER);
     }
-
-    private void render(String text){
-        System.out.println(text);
-    }
-
-    private void makeCustomSpacer(char spacer, int length){
-        for(int i = 0; i < length; i++){
-            render(String.valueOf(spacer));
-        }
-    }
-
-
-
-
 
 }

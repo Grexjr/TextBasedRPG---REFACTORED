@@ -1,7 +1,8 @@
-package combat.actions;
+package actions;
 
 import combat.BattleResult;
 import combat.BattleScene;
+import data.BattleActionType;
 import entities.Entity;
 import entities.Player;
 import ui.BattleUIHandler;
@@ -13,12 +14,12 @@ public class RunAction extends BattleAction {
     private final ArrayList<Entity> runFroms;
 
     public RunAction(BattleScene scene, Entity user, ArrayList<Entity> runFroms){
-        super(ActionType.RUN,scene, user);
+        super(BattleActionType.RUN, user, scene);
         this.runFroms = runFroms;
     }
 
     @Override
-    public void execute(BattleUIHandler ui){
+    public void executeBattleAction(BattleUIHandler ui){
         boolean runSuccess = getActor().attemptRun(runFroms);
         ui.printRun(getActor(),runSuccess);
         if(runSuccess){
