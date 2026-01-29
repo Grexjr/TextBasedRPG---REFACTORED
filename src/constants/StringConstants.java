@@ -11,6 +11,10 @@ public class StringConstants {
     public static final String SPACER_3 = " >> ";
     public static final String SPACER_4 = " > ";
 
+    // Choice strings
+    // Action string including its number for choosing, name, and AP cost
+    public static final String ACTION_STRING = "%d. %s (%d)";
+
 
     // Displaying entities.Entity
     public static final String ENTITY_DISPLAY = "%s%n%s%nLevel: %d%nHealth: %d/%d%nAttack: %d%nDefense: %d%nSpeed: %d%n";
@@ -23,6 +27,7 @@ public class StringConstants {
     // Battle ask for choice
     public static final String BATTLE_CHOICE = "Choose your action!%n1. %s (%d)%n2. %s (%d)%n3. %s (%d)%n4. %s (%d)%n" +
             "5. %s%n" + SPACER_3 + "Input 1-4";
+    //TODO: Change the above: "%d. %s (%d)%n," then loop through this generic situation for all options printing
     public static final String BATTLE_CHOICE_INVALID = SPACER_3 + "Please input 1-%d!";
     //Battle ask for target
     public static final String BATTLE_TARGET = "Who is your target?%n" + SPACER_3 + "Input 1-%d";

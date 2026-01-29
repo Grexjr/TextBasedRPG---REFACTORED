@@ -3,50 +3,59 @@ package data;
 public enum BattleActionType implements GameActionType {
 
     ATTACK(
-            1,
+            "ATTACK_ACTION",
+            10,
             "Attack",
             3,
             0
     ),
     DEFEND(
-            2,
+            "DEFEND_ACTION",
+            20,
             "Defend",
             5,
             1
     ),
     ITEM(
-            3,
+            "ITEM_ACTION",
+            30,
             "Use an Item",
             2,
             0
     ),
     RUN(
-            4,
+            "RUN_ACTION",
+            50,
             "Run",
             0,
             Integer.MAX_VALUE
     ),
     END_TURN(
-            5,
+            "END_TURN_ACTION",
+            99,
             "End Turn",
             0,
             -1
     );
 
-    private final int id, apBaseCost,priority;
-    private final String name;
+    private final String id, name;
+    private final int sortOrder, apBaseCost,priority;
 
-    BattleActionType(int id, String name, int apCost, int priority){
+    BattleActionType(String id, int sortOrder, String name, int apCost, int priority){
         this.id = id;
+        this.sortOrder = sortOrder;
         this.name = name;
         this.apBaseCost = apCost;
         this.priority = priority;
     }
 
     @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
+
+    @Override
+    public int getSortOrder(){return sortOrder;}
 
     @Override
     public int getApBaseCost() {

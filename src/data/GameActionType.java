@@ -1,7 +1,8 @@
 package data;
 
 public interface GameActionType {
-    int getId();
+    String getId();
+    int getSortOrder();
     int getApBaseCost();
     int getPriority();
     String getName();
