@@ -3,12 +3,14 @@ package world;
 import constants.CommonConstants;
 import constants.WorldConstants;
 import data.RoomType;
+import entities.Player;
 import ui.DungeonUIHandler;
 
 public class DungeonManager {
 
     private final DungeonUIHandler ui;
     private Room currentRoom;
+    private Player player;
 
     public DungeonManager(DungeonUIHandler ui){
         this.ui = ui;
@@ -42,10 +44,6 @@ public class DungeonManager {
 
     }
 
-    private void addRoomConnections(){
-
-    }
-
     public Room generateRoom(int floorNum){
         // TODO: Run appearance chance calculation here, then populate the room that is created, then return it
         Room room = new Room(RoomType.getRandomRoomType());
@@ -53,7 +51,20 @@ public class DungeonManager {
         return room;
     }
 
-    public void movePlayer(){
+    // Main method to move player to new room and run room code
+    public void moveTo(String direction){
+        Room nextRoom = currentRoom.getNeighbor(direction);
+        if(nextRoom != null){
+            this.currentRoom = nextRoom;
+            onRoomEnter();
+        }
+    }
+
+    private void onRoomEnter(){
+        ui.printEnterRoom();
+    }
+
+    private void addRoomConnections(){
 
     }
 

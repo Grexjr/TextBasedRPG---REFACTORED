@@ -9,7 +9,15 @@ public class StringConstants {
     public static final String SPACER_1 = " - ";
     public static final String SPACER_2 = " -> ";
     public static final String SPACER_3 = " >> ";
+    public static final String SPACER_3A = " << ";
     public static final String SPACER_4 = " > ";
+    public static final String SPACER_4A = " < ";
+
+    // Choice strings
+    // Action string including its number for choosing, name, and AP cost
+    public static final String ACTION_HEADER = SPACER_3 + "Choose your action!" + SPACER_3A;
+    public static final String ACTION_STRING = "%d. %s (%d)";
+    public static final String INPUT_REQUEST_STRING = SPACER_3 + "Input 1-%d" + SPACER_3A;
 
 
     // Displaying entities.Entity
@@ -20,10 +28,7 @@ public class StringConstants {
     public static final String BATTLE_LIST = SPACER_1 + "%s %s %s appears!";
     public static final String[] ENEMY_DESCRIPTORS = {"evil","wanton","nefarious","disgusting","tricksy",
             "putrid","scary"};
-    // Battle ask for choice
-    public static final String BATTLE_CHOICE = "Choose your action!%n1. %s (%d)%n2. %s (%d)%n3. %s (%d)%n4. %s (%d)%n" +
-            "5. %s%n" + SPACER_3 + "Input 1-4";
-    public static final String BATTLE_CHOICE_INVALID = SPACER_3 + "Please input 1-%d!";
+    public static final String BATTLE_CHOICE_INVALID = SPACER_3 + "Please input 1-%d!" + SPACER_3A;
     //Battle ask for target
     public static final String BATTLE_TARGET = "Who is your target?%n" + SPACER_3 + "Input 1-%d";
     public static final String BATTLE_TARGET_LIST = "%d. %s";

@@ -1,8 +1,8 @@
 package ui;
 
 import combat.BattleResult;
-import combat.actions.ActionType;
-import constants.CommonConstants;
+import data.ActionTypeRegistry;
+import data.BattleActionType;
 import constants.StringConstants;
 import entities.Entity;
 import entities.Player;
@@ -31,20 +31,9 @@ public class BattleUIHandler implements UIHandler {
         render(StringConstants.PAGE_BREAK);
     }
 
+    // TODO: Get rid of this method and replace instances with the superclass method
     public void printPlayerChoose(Entity choosingPlayer){
-        String message = String.format(
-                StringConstants.BATTLE_CHOICE,
-                ActionType.ATTACK.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ATTACK),
-                ActionType.DEFEND.getName(),
-                choosingPlayer.calculateAPCost(ActionType.DEFEND),
-                ActionType.ITEM.getName(),
-                choosingPlayer.calculateAPCost(ActionType.ITEM),
-                ActionType.RUN.getName(),
-                choosingPlayer.calculateAPCost(ActionType.RUN),
-                ActionType.END_TURN.getName()
-        );
-        render(message);
+        printActions(ActionTypeRegistry.getBattleActionTypes(), choosingPlayer);
     }
 
     public void printInvalidChoose(int choices){
@@ -93,6 +82,7 @@ public class BattleUIHandler implements UIHandler {
                 StringConstants.BATTLE_ATTACK_NOTHING,
                 attacker.getName()
         );
+        render(message);
     }
 
     public void printDefense(Entity defender){
