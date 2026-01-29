@@ -82,6 +82,7 @@ public class BattleUIHandler implements UIHandler {
                 StringConstants.BATTLE_ATTACK_NOTHING,
                 attacker.getName()
         );
+        render(message);
     }
 
     public void printDefense(Entity defender){
