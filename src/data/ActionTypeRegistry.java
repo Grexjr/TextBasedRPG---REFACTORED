@@ -11,6 +11,7 @@ public class ActionTypeRegistry {
 
     // Categorized lists
     private static final List<BattleActionType> BATTLE_ACTION_TYPES = new ArrayList<>();
+    private static final List<RoomActionType> ROOM_ACTION_TYPES = new ArrayList<>();
 
     // Runs once when the file is loaded into memory, so basically at the beginning of things
     static{
@@ -18,6 +19,11 @@ public class ActionTypeRegistry {
         for(BattleActionType battleActionType : BattleActionType.values()){
             ALL_ACTION_TYPES.put(battleActionType.getId(), battleActionType);
             BATTLE_ACTION_TYPES.add(battleActionType);
+        }
+        // Register room actions
+        for(RoomActionType roomActionType : RoomActionType.values()){
+            ALL_ACTION_TYPES.put(roomActionType.getId(),roomActionType);
+            ROOM_ACTION_TYPES.add(roomActionType);
         }
     }
 
