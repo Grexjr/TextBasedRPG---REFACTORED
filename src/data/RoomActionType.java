@@ -5,41 +5,36 @@ public enum RoomActionType implements GameActionType{
             "SCOUT_ACTION",
             "Scout",
             10,
-            1,
-            0
+            1
     ),
     INVESTIGATE(
             "INVESTIGATE_ACTION",
             "Investigate",
             20,
-            4,
-            0
+            4
     ),
     ENGAGE(
             "ENGAGE_ACTION",
             "Engage",
             30,
-            2,
-            0
+            2
     ),
     REST(
             "REST_ACTION",
             "Rest",
             40,
-            0, // Uses max of entity
-            0
+            0 // Uses max of entity
     );
 
 
     private final String id, name;
-    private final int sortOrder, apBaseCost,priority;
+    private final int sortOrder, apBaseCost;
 
-    RoomActionType(String id, String name, int sortOrder, int apBaseCost, int priority){
+    RoomActionType(String id, String name, int sortOrder, int apBaseCost){
         this.id = id;
         this.name = name;
         this.sortOrder = sortOrder;
         this.apBaseCost = apBaseCost;
-        this.priority = priority;
     }
 
     @Override
@@ -55,11 +50,6 @@ public enum RoomActionType implements GameActionType{
     @Override
     public int getApBaseCost() {
         return apBaseCost;
-    }
-
-    @Override
-    public int getPriority() {
-        return priority;
     }
 
     @Override

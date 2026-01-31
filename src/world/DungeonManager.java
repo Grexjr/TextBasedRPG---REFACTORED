@@ -3,6 +3,7 @@ package world;
 import constants.CommonConstants;
 import constants.WorldConstants;
 import data.RoomType;
+import entities.Entity;
 import entities.Player;
 import ui.DungeonUIHandler;
 
@@ -52,16 +53,17 @@ public class DungeonManager {
     }
 
     // Main method to move player to new room and run room code
-    public void moveTo(String direction){
+    public void moveTo(Entity mover, String direction){
         Room nextRoom = currentRoom.getNeighbor(direction);
         if(nextRoom != null){
             this.currentRoom = nextRoom;
-            onRoomEnter();
+            onRoomEnter(mover);
         }
     }
 
-    private void onRoomEnter(){
+    private void onRoomEnter(Entity enterer){
         ui.printEnterRoom();
+        ui.printRoomActions(enterer);
     }
 
     private void addRoomConnections(){

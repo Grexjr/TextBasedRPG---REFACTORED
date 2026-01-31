@@ -63,12 +63,11 @@ public enum BattleActionType implements GameActionType {
     }
 
     @Override
-    public int getPriority() {
-        return priority;
-    }
-
-    @Override
     public String getName() {
         return name;
+    }
+
+    public int getPriority() {
+        return priority;
     }
 }

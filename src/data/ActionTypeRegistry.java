@@ -33,4 +33,6 @@ public class ActionTypeRegistry {
 
     public static List<BattleActionType> getBattleActionTypes(){return BATTLE_ACTION_TYPES;}
 
+    public static List<RoomActionType> getRoomActionTypes(){return ROOM_ACTION_TYPES;}
+
 }
