@@ -7,6 +7,7 @@ public enum EnemySpecies {
     // Negative values in enemy stats ensure level 1 stats are fair
 
     SLIME(
+            "SLIME",
           "Slime",
           "A gooey, disgusting blob!",
           9,
@@ -21,6 +22,7 @@ public enum EnemySpecies {
             0.2
     ),
     SKELETON(
+            "SKELETON",
             "Skeleton",
             "A bony creature!",
             4,
@@ -35,6 +37,7 @@ public enum EnemySpecies {
             0.7
     ),
     CYBERNETIC_ROCK(
+            "CYBERNETIC_ROCK",
             "Cybernetic Rock",
             "A cybernetically enhanced... boulder?",
             20,
@@ -49,13 +52,14 @@ public enum EnemySpecies {
             0.25
     );
 
-    private final String name, description;
+    private final String enemyID, name, description;
     private final int maxHealthBase, attackBase, defenseBase, speedBase, maxAPBase;
     private final double maxHealthScale, attackScale, defenseScale, speedScale, maxAPScale;
 
-    EnemySpecies(String name, String description, int maxHealthBase, double maxHealthScale, int attackBase,
+    EnemySpecies(String id, String name, String description, int maxHealthBase, double maxHealthScale, int attackBase,
                  double attackScale, int defenseBase, double defenseScale, int speedBase, double speedScale,
                  int maxAPBase, double maxAPScale){
+        this.enemyID = id;
         this.name = name;
         this.description = description;
         this.maxHealthBase = maxHealthBase;
@@ -69,6 +73,8 @@ public enum EnemySpecies {
         this.maxAPBase = maxAPBase;
         this.maxAPScale = maxAPScale;
     }
+
+    public String getEnemyID(){return enemyID;}
 
     public String getName() {
         return name;

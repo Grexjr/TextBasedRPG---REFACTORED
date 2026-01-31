@@ -3,9 +3,11 @@ package core;
 import combat.BattleScene;
 import constants.CommonConstants;
 import data.EnemySpecies;
+import data.RoomType;
 import entities.Enemy;
 import entities.Player;
 import ui.BattleUIHandler;
+import world.Room;
 
 public class Main {
 
@@ -16,6 +18,7 @@ public class Main {
         Enemy enemy1 = new Enemy(EnemySpecies.SKELETON,1);
         Enemy enemy2 = new Enemy(EnemySpecies.CYBERNETIC_ROCK,1);
 
+        Room room = new Room(RoomType.BASIC_ROOM);
 
         Player player = new Player();
 
